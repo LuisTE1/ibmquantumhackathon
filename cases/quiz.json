@@ -1,18 +1,60 @@
 {
   "pre": [
-    {"q": "Lanzas 10 veces una moneda justa. ¿Siempre salen exactamente 5 caras y 5 sellos?",
-     "options": ["Sí, siempre", "No: el número varía alrededor de 5", "Solo si lanzas muy rápido"], "answer": 1},
-    {"q": "Mides un qubit que está en superposición 50/50. ¿Qué obtienes?",
-     "options": ["Siempre 0", "Siempre 1", "0 o 1 al azar, cada uno con cierta probabilidad"], "answer": 2},
-    {"q": "En un experimento 50/50 salieron 7 unos en 10 mediciones. ¿Prueba eso que fue alterado?",
-     "options": ["Sí, seguro", "No: puede pasar por puro azar", "Solo si fueron más de 10 mediciones"], "answer": 1}
+    {
+      "q": "Un modelo asigna probabilidad 0,5 al resultado 1. En 10 intentos independientes aparecen 7 unos. ¿Qué conclusión es correcta?",
+      "options": [
+        "La probabilidad teórica cambió automáticamente a 0,7.",
+        "La frecuencia observada es 0,7; una muestra pequeña puede diferir de la probabilidad 0,5.",
+        "El modelo es imposible, porque siempre deben salir exactamente 5 unos."
+      ],
+      "answer": 1
+    },
+    {
+      "q": "En un circuito ideal, se prepara un qubit en 0, se aplica Hadamard y se mide en la base 0/1. ¿Qué predice esa preparación para cada ejecución?",
+      "options": [
+        "Probabilidad 0,5 de obtener 0 y 0,5 de obtener 1.",
+        "El resultado 1 con certeza.",
+        "Resultados que alternan obligatoriamente entre 0 y 1."
+      ],
+      "answer": 0
+    },
+    {
+      "q": "Un qubit ideal comienza en 0. Se aplica una puerta X y después se mide en la base 0/1. ¿Qué resultado se obtiene?",
+      "options": [
+        "0 con certeza.",
+        "0 o 1 con igual probabilidad.",
+        "1 con certeza."
+      ],
+      "answer": 2
+    }
   ],
   "post": [
-    {"q": "Un experimento da 1 con probabilidad 0.75. Haces 100 mediciones. ¿Qué esperas?",
-     "options": ["Exactamente 75 unos", "Cerca de 75 unos, pero puede variar", "Siempre más de 75 unos"], "answer": 1},
-    {"q": "¿Qué hace la compuerta Hadamard (h) sobre un qubit en 0?",
-     "options": ["Lo deja en 0", "Lo pone en superposición 50/50", "Lo mide"], "answer": 1},
-    {"q": "En un caso, un sospechoso hizo una declaración falsa. ¿Basta eso para acusarlo?",
-     "options": ["Sí, siempre", "No: hace falta otra evidencia que lo respalde", "Solo si es el más sospechoso"], "answer": 1}
+    {
+      "q": "Un circuito tiene probabilidad teórica 0,75 de producir 1. En 100 ejecuciones independientes aparecen 68 unos. ¿Cómo se interpreta?",
+      "options": [
+        "La probabilidad teórica pasó necesariamente a ser 0,68.",
+        "El circuito está averiado, porque deben aparecer exactamente 75 unos.",
+        "La frecuencia observada es 0,68; puede diferir de 0,75 por variación del muestreo."
+      ],
+      "answer": 2
+    },
+    {
+      "q": "En un modelo ideal, medir un qubit preparado en 0 da siempre 0. Si antes se aplica Hadamard, ambos resultados tienen probabilidad 0,5. ¿Qué explica la diferencia?",
+      "options": [
+        "Contar más resultados cambia por sí solo la probabilidad teórica.",
+        "La preparación cambió el estado y, con la misma base de medición, cambió las probabilidades.",
+        "La medición elige siempre el resultado menos frecuente."
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Un qubit ideal comienza en 0. Se aplican dos puertas Hadamard seguidas, sin medir entre ellas, y luego se mide en la base 0/1. ¿Qué se obtiene?",
+      "options": [
+        "0 con certeza: las dos Hadamard recuperan el estado inicial.",
+        "0 o 1 con igual probabilidad: la segunda Hadamard no cambia nada.",
+        "1 con certeza: cada Hadamard equivale a una X."
+      ],
+      "answer": 0
+    }
   ]
 }

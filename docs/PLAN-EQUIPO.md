@@ -1,4 +1,6 @@
-﻿# ACTUALIZACIÓN (queda ~1 h 30 min) — LEER ESTO PRIMERO
+﻿> **ANTECEDENTE HISTÓRICO: especificación narrativa sustituida.** El equipo aprobó definitivamente El experimento fantasma: Sami añade la segunda H a las 21:14; Rumi retira el módulo a las 21:19; la acusación cruza auditoría y reconstrucción; final PHI/Φ. Este documento conserva el plan anterior: no es la especificación del caso actual ni evidencia de funciones implementadas. Consultar [MIGRACION-NARRATIVA.md](MIGRACION-NARRATIVA.md) y el README vigente.
+
+# ACTUALIZACIÓN (queda ~1 h 30 min) — LEER ESTO PRIMERO
 **Roles definitivos:** la **compañera = parte visual** (pp.py, ssets/) · **tú = motor** (engine/, 	ests/) · el **compañero = documentación** (docs/, README.md, cases/, PPT, video).
 **Alcance recortado (solo lo imprescindible):** 1 caso · 3 pruebas simples · acusación final · código de Qiskit visible · 1 pista del Cuy. **Fuera por falta de tiempo:** caso del día, estrellas, tres niveles de ayuda. El quiz antes/después se hace con 2–3 personas si da tiempo; si no, se presenta como *plan de validación* (**nunca inventar resultados**).
 **Sobre Qiskit:** lo cuántico es solo ~25 líneas en engine/circuits.py (ya verificado). No lo quiten: Qiskit es el 25 % de la nota y el reto pide el equivalente cuántico. Si falla en el evento, USE_QISKIT = False activa un respaldo con números aleatorios (con la misma interfaz) y se declara en la documentación.
