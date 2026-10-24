@@ -1,0 +1,145 @@
+NTT DATA Qiskit Fall Fest Lima QAP10 · Reto técnico
+NTT DATA · QISKIT FALL FEST LIMA
+Reto QAP10
+Optimización cuántica e híbrida de un problema de asignación
+Especificación para participantes · Instancia MIPLIBqap10
+1. El reto
+Tienes diez elementos que asignar a diez ubicaciones. Entre esos elementos hay flujos de personas, vehículos o
+materiales; entre las ubicaciones hay distancias. Una buena asignación coloca cerca a los elementos que más
+interactúan, pero una decisión puede afectar a muchas otras. El reto consiste en encontrar una asignación de
+bajo costo, comparando un método clásico con otro que utilice Qiskit.
+La pregunta central
+¿Hasta dónde pueden ayudar los métodos cuánticos, inspirados en computación cuántica o híbridos a
+encontrar buenas asignaciones cuando el tiempo y los recursos de cómputo son limitados? No se trata
+de demostrar una ventaja cuántica: se trata de medir qué funciona, qué no y por qué.
+2. Elige el contexto industrial
+Las dos narrativas siguientes permiten interpretar las matrices del problema.Son adaptaciones de negocio:los
+datos de qap10 pertenecen a un benchmark matemático, no a un aeropuerto ni a una red de recarga reales. Las
+unidades y las conclusiones operativas deben tratarse como supuestos, no como mediciones.
+Track A · Transporte y logística: puertas de embarque
+Un aeropuerto debe asignar diez vuelos de conexión a diez puertas. Algunos vuelos comparten muchos
+pasajeros en tránsito; si sus puertas quedan lejos, esos pasajeros deberán recorrer más distancia.
+FlujoF ik:pasajeros que conectan entre los vuelosiyk.
+DistanciaD jl:distancia entre las puertasjyl.
+Decisión:qué puerta recibe cada vuelo para reducir la distancia total ponderada de las conexiones.
+Track B · Sostenibilidad y smart cities: recarga de flotas eléctricas
+Una ciudad estudia cómo vincular diez rutas de transporte o recolección eléctrica con diez estaciones
+de recarga. Las rutas presentan distintos niveles de interacción y las estaciones están separadas por
+distancias diferentes.
+FlujoF ik:indicador de demanda compartida o movimientos entre las rutasiyk.
+DistanciaD jl:distancia entre las estacionesjyl.
+Decisión:asignar una estación a cada ruta para reducir el costo total flujo-distancia.
+La reducción de emisiones o los tiempos de operación solo podrán afirmarse si se incorporan datos y
+supuestos adicionales que los respalden.
+1
+NTT DATA Qiskit Fall Fest Lima QAP10 · Reto técnico
+Track abierto · Hasta 10 puntos adicionales
+¿Tienes una aplicación mejor? Puedes proponer una narrativa propia en salud, finanzas, retail, manufac-
+tura u otro sector, manteniendo el mismo problema matemático. Para optar a la bonificación, explica qué
+representan F y D, qué decisión empresarial se toma y cómo estimarías su impacto. Si incluyes ahorros o
+retorno de inversión (ROI), muestra el cálculo y los supuestos: no los presentes como resultados medidos.
+3. Qué vas a optimizar
+La instancia qap10 pertenece alproblema de asignación cuadrática(QAP). Sean Fik el flujo entre los elementos i y k,
+y Djl la distancia entre las ubicaciones j y l. Definimos xij = 1 cuando el elemento i se asigna a la ubicación j, y
+xij =0 en otro caso.
+Modelo de referencia
+m´ınx C(x) = ∑i<k ∑j̸=l Fik Djl xij xkl
+sujeto a ∑
+j
+xij =1(∀i),
+∑
+i
+xij =1(∀j),x ij ∈ {0, 1}.
+Cada elemento ocupa una ubicación y cada ubicación recibe un único elemento. Para comparar resultados,
+utiliza la convención del archivo:cada par se cuenta una sola vez. Si cuentas cada par dos veces, también
+duplicas el costo. El óptimo de referencia de la instancia completa esC ∗ =340.
+Dato Instancia completa
+Archivoqap10.mps.gz , disponible en https://miplib.zib.de/instance_details_qap10.
+html
+Modelo linealizado 4 150 variables; 1 820 restricciones de igualdad
+Decisiones de asigna-
+ción
+10×10=100 variables binariasx ij
+Soluciones factibles 10!=3 628 800 permutaciones
+Óptimo de referencia 340
+El archivo MPS utiliza variables adicionales para linealizar los productos xij xkl. Puedes reconstruir el modelo
+cuadrático y trabajar con él. Explica cómo recuperaste los coeficientes y verificaste que calculas el costo en la
+escala correcta.
+4. Cómo entra Qiskit
+Todos los equipos deben usarQiskit de manera sustantiva: para construir, representar, simular o evaluar al
+menos una parte de su enfoque de optimización.QAOA es una sugerencia, no una obligación.También puedes
+explorar VQE, circuitos variacionales, formulaciones Ising, métodos inspirados en computación cuántica o
+estrategias híbridas. Aclara qué hace Qiskit y qué partes se ejecutan con métodos clásicos.
+Una opción consiste en incorporar las restricciones como penalizaciones QUBO:
+2
+NTT DATA Qiskit Fall Fest Lima QAP10 · Reto técnico
+H(x) =C(x) +λ ∑
+i
+(︂
+∑
+j
+xij −1
+)︂2
++λ ∑
+j
+(︂
+∑
+i
+xij −1
+)︂2
+.
+λ controla cuánto se penalizan asignaciones inválidas. Justifica su valor y comprueba la factibilidad de los
+resultados. Con la sustitución x= ( 1 −Z)/ 2, puedes representar el QUBO mediante un Hamiltoniano de Ising.
+El QUBO completo contiene 100 variables binarias.No se espera simular un circuito genérico de 100 qubits
+con statevector.Es válido empezar con instancias pequeñas, fijar decisiones, optimizar vecindarios y reconstruir
+una asignación completa. Tener menos variables que el MILP no hace automáticamente más fácil el problema.
+5. Etapas del reto
+Etapa 1 · Primer modelo y comparación (Día 1)
+Trabaja con N= 3 o N= 4, usando las primeras N filas y columnas de las matrices recuperadas.
+Resuelve esa subinstancia con un método clásico y prueba una estrategia con Qiskit. Compara costo,
+factibilidad y tiempo. Los óptimos de control son 24 y 32, respectivamente.
+Etapa 3 · Escalamiento (Día 2, finalistas)
+Investiga qué ocurre cuando creceN o se amplían los vecindarios de búsqueda. Evalúa costo, factibilidad,
+tiempo y memoria. No hace falta simular el problema ampliado como un único circuito para estudiar
+una estrategia de escalamiento.
+NVariables QUBO Permutaciones factibles Memoria statevector
+3 9 6 8 KiB
+4 16 24 1 MiB
+5 25 120 512 MiB
+10 100 3 628 800 No práctico
+Cifras de memoria calculadas para amplitudes complejas de 128 bits.
+6. Qué debe mostrar cada equipo
+Al terminar el Día 1, presenta un resultado que otra persona pueda revisar: una instancia bien definida, una
+solución clásica de referencia, un experimento real con Qiskit y una comparación de resultados. Si tu método
+con Qiskit no mejora al clásico, explica qué ocurrió.
+Modelo y datos:instancia, variables, función de costo, restricciones y reducción realizada.
+Baseline clásico:método utilizado, asignación, costo y tiempo.
+Componente Qiskit:qué ejecutaste, tamaño del problema, configuración y resultados.
+Comparación:mejor costo factible, fracción factible de las muestras cuando corresponda, tiempo total y
+límites del método.
+Reproducibilidad:código, versiones, semillas y parámetros necesarios para repetir el experimento.
+3
+NTT DATA Qiskit Fall Fest Lima QAP10 · Reto técnico
+Para la instancia completa, calcula la brecha respecto del óptimo solo sobre soluciones válidas:
+gap(%) =100 C−340340 .
+La energía penalizada del QUBO no es lo mismo que el costo de una asignación factible. Si reportas ambas,
+identifícalas.
+7. Evaluación
+Criterio Puntos
+Modelo matemático, lectura de datos y factibilidad 25
+Uso pertinente de Qiskit y justificación del método 30
+Calidad de las asignaciones y comparación clásica 20
+Rigor experimental: tiempo, límites y escalamiento 15
+Claridad y sentido operativo del resultado 10
+Puntuación base 100
+Bonificación: track abierto Hasta +10
+Cómo funciona la bonificación
+Una narrativa diferente no otorga puntos automáticamente. El jurado valorará su originalidad, el sentido
+de las matrices de flujo y distancia, y la justificación cuantitativa del impacto propuesto. La bonificación
+se suma a la puntuación base:máximo posible, 110 puntos.
+Lo que cuenta
+Una asignación válida y reproducible, un uso real y bien explicado de Qiskit y una comparación justa
+con métodos clásicos. No se puntúan afirmaciones de ventaja cuántica sin evidencia. Diferencia con
+precisión el cálculo en circuitos, su simulación y las operaciones resueltas clásicamente.
+Fuente:https://miplib.zib.de/instance_details_qap10.html.
+4

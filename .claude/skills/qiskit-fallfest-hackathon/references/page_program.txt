@@ -1,0 +1,218 @@
+Skip to content
+Acerca de
+Ponentes
+Programa
+Leaderboard
+Recursos
+Tienda
+ES
+Postula
+Calendario
+Programa
+
+Una hoja de ruta de las ponencias, recursos y sesiones de cada etapa.
+
+Stage 1
+Stage 2
+Stage 3
+
+Programa de ponencias
+
+Stage 1
+Hoja de ruta
+de ponencias ↓
+
+Día 1
+
+21 sep.
+
+Día 2
+
+22 sep.
+
+Día 3
+
+23 sep.
+
+Día 4
+
+24 sep.
+
+Día 5
+
+25 sep.
+
+Día 6
+
+26 sep.
+
+Día 7
+
+27 sep.
+
+Día 8
+
+28 sep.
+
+Día 9
+
+29 sep.
+
+Día 10
+
+30 sep.
+
+Fundamentos y herramientas
+
+De la apertura a los sistemas cuánticos básicos.
+
+18:00
+Opening & Kick Off
+
+Daniel Mamani
+
+Luma
+20:00
+Quantum Environment and Initialization
+
+Nicole Fernández
+
+Luma
+10:00
+Essential Mathematics
+
+Dennis Quiso
+
+Luma
+15:00
+Essential Python Programming
+
+Dire Espinal
+
+Luma
+20:30
+Classical Systems
+
+Renzo Cienfuegos
+
+Luma
+10:00
+Why Quantum Mechanics?
+
+Dennis Quiso
+
+Luma
+12:00
+First Quantization & Operator Algebra
+
+Rodrigo Horna
+
+Luma
+16:00
+Proyección: La chica que saltaba a través del tiempo
+
+IEEE Computer Society PUCP & Función Cine PUCP
+
+Luma
+10:00
+Unitary Evolution & Schrödinger Equation
+
+Antonio Romero
+
+Luma
+12:00
+Quantum Optical Devices
+
+Rodrigo Horna
+
+Luma
+09:30
+Basic Quantum Systems
+
+Enrique Cervantes
+
+Luma
+15:30
+Qubit Operations
+
+Marino A. Chuquilín
+
+Luma
+15:00
+Entanglement and Protocols
+
+Kelvin Cahuana
+
+Luma
+20:00
+Review | Fundamental Concepts of Modern Quantum - J. J. Sakurai: A Statistical
+
+Daniel Mamani
+
+Luma
+19:00
+Complex Algebra & Quantum States
+
+Maria Pareja
+
+Luma
+21:00
+Qubit Geometry and Transformations
+
+Maria Pareja
+
+Luma
+20:00
+Fourier and Quantum Fourier Transform
+
+Maria Pareja
+
+Luma
+
+Calendario de ponencias
+
+Stage 2
+Hoja de ruta
+de ponencias ↓
+
+19 oct.
+
+Octubre 2026
+
+20 oct.
+
+Octubre 2026
+
+21 oct.
+
+Octubre 2026
+
+22 oct.
+
+Octubre 2026
+
+23 oct.
+
+Octubre 2026
+
+Stage 2
+
+Ponencias por anunciar.
+
+Calendario de ponencias
+
+Stage 3
+Hoja de ruta
+de ponencias ↓
+
+24 oct.
+
+Octubre 2026
+
+25 oct.
+
+Octubre 2026
+
+Stage 3
+
+Ponencias por anunciar.

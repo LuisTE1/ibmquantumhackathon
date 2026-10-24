@@ -1,0 +1,352 @@
+[
+  {
+    "page": 1,
+    "title": "Opening & Kick Off | IBM QGSS Advanced Recommendations",
+    "date": "21 sep. 2026 · 6:00 p. m.",
+    "speaker": "Daniel Mamani",
+    "chips": [
+      "Diapositivas"
+    ],
+    "verRecurso": [
+      "https://drive.google.com/file/d/1RF49J4b6RcBLMeo1M1rWGD8EM7mtNrOO/preview"
+    ],
+    "materials": {
+      "Diapositivas": [
+        "https://drive.google.com/file/d/1RF49J4b6RcBLMeo1M1rWGD8EM7mtNrOO/preview"
+      ]
+    },
+    "anchors": []
+  },
+  {
+    "page": 1,
+    "title": "Modern Quantum Mechanics — 3rd Edition",
+    "date": "21 sep. 2026 · 6:00 p. m.",
+    "speaker": "Daniel Mamani",
+    "chips": [
+      "Regalos"
+    ],
+    "verRecurso": [
+      "https://drive.google.com/file/d/1yb9v25_tPpK8B-Yh1QDGZtEsnnrDCZCi/preview"
+    ],
+    "materials": {
+      "Regalos": [
+        "https://drive.google.com/file/d/1yb9v25_tPpK8B-Yh1QDGZtEsnnrDCZCi/preview"
+      ]
+    },
+    "anchors": []
+  },
+  {
+    "page": 1,
+    "title": "Quantum computers and large language models",
+    "date": "27 sep. 2026",
+    "speaker": "Daniel Mamani",
+    "chips": [
+      "Regalos"
+    ],
+    "verRecurso": [
+      "/resources/quantum-vs-llms?embed=1"
+    ],
+    "materials": {
+      "Regalos": [
+        "/resources/quantum-vs-llms?embed=1"
+      ]
+    },
+    "anchors": []
+  },
+  {
+    "page": 1,
+    "title": "Quantum Environment and Initialization",
+    "date": "21 sep. 2026 · 8:00 p. m.",
+    "speaker": "Nicole Fernández",
+    "chips": [
+      "Diapositivas"
+    ],
+    "verRecurso": [
+      "https://drive.google.com/file/d/1bXbKnlPtTwbxtSAT_QMM-q-LVgBIl4qV/preview"
+    ],
+    "materials": {
+      "Diapositivas": [
+        "https://drive.google.com/file/d/1bXbKnlPtTwbxtSAT_QMM-q-LVgBIl4qV/preview"
+      ]
+    },
+    "anchors": []
+  },
+  {
+    "page": 1,
+    "title": "Essential Mathematics",
+    "date": "22 sep. 2026 · 10:00 a. m.",
+    "speaker": "Dennis Quiso",
+    "chips": [
+      "Diapositivas",
+      "Problemas"
+    ],
+    "verRecurso": [
+      "https://drive.google.com/file/d/1HFeUHtHT47g2Qs8KXrBp-uJry6hYIBKg/preview"
+    ],
+    "materials": {
+      "Diapositivas": [
+        "https://drive.google.com/file/d/1HFeUHtHT47g2Qs8KXrBp-uJry6hYIBKg/preview"
+      ],
+      "Problemas": [
+        "https://drive.google.com/file/d/1ZeD66Qrnnm0yLFTJKY4ZwqiGPy_BnB0Z/preview"
+      ]
+    },
+    "anchors": [
+      {
+        "text": "Grabaciones",
+        "href": "https://www.youtube.com/watch?v=9J9vTGQC_HU"
+      }
+    ]
+  },
+  {
+    "page": 1,
+    "title": "Essential Python Programming",
+    "date": "22 sep. 2026 · 3:00 p. m.",
+    "speaker": "Dire Espinal",
+    "chips": [
+      "Diapositivas",
+      "Código",
+      "Problemas"
+    ],
+    "verRecurso": [
+      "https://drive.google.com/file/d/1qx130cd2nVVJY2RF-1nvR3GBkA7ixr6f/preview"
+    ],
+    "materials": {
+      "Diapositivas": [
+        "https://drive.google.com/file/d/1qx130cd2nVVJY2RF-1nvR3GBkA7ixr6f/preview"
+      ],
+      "Código": [
+        "/code/essential-python-programming.html"
+      ],
+      "Problemas": [
+        "https://drive.google.com/file/d/1MJi9FSc-ivnfYO93fbs3iVeDv18AtjX6/preview"
+      ]
+    },
+    "anchors": []
+  },
+  {
+    "page": 2,
+    "title": "Curso Python — Básico",
+    "date": "22 sep. 2026 · 3:00 p. m.",
+    "speaker": "Dire Espinal",
+    "chips": [],
+    "verRecurso": null,
+    "materials": {},
+    "anchors": [
+      {
+        "text": "Ver recurso",
+        "href": "https://github.com/DireEspinalP/Curso-Python/tree/main/Basico"
+      },
+      {
+        "text": "Regalos",
+        "href": "https://github.com/DireEspinalP/Curso-Python/tree/main/Basico"
+      }
+    ]
+  },
+  {
+    "page": 2,
+    "title": "OTI-UNI — Python Basic",
+    "date": "22 sep. 2026 · 3:00 p. m.",
+    "speaker": "Dire Espinal",
+    "chips": [],
+    "verRecurso": null,
+    "materials": {},
+    "anchors": [
+      {
+        "text": "Ver recurso",
+        "href": "https://github.com/DireEspinalP/OTI-UNI/tree/main/Python_Basic"
+      },
+      {
+        "text": "Regalos",
+        "href": "https://github.com/DireEspinalP/OTI-UNI/tree/main/Python_Basic"
+      }
+    ]
+  },
+  {
+    "page": 2,
+    "title": "Quantum Computing Fundamentals: Classical Systems",
+    "date": "23 sep. 2026 · 8:30 p. m.",
+    "speaker": "Renzo Cienfuegos",
+    "chips": [
+      "Diapositivas",
+      "Código",
+      "Problemas"
+    ],
+    "verRecurso": [
+      "https://drive.google.com/file/d/1DmI6XzC23AjJtZLBi_ZAAiDH6Dp-zXLW/preview"
+    ],
+    "materials": {
+      "Diapositivas": [
+        "https://drive.google.com/file/d/1DmI6XzC23AjJtZLBi_ZAAiDH6Dp-zXLW/preview"
+      ],
+      "Código": [
+        "/code/quantum-computing-fundamentals-classical-systems.html"
+      ],
+      "Problemas": [
+        "https://drive.google.com/file/d/11dhjpsbgC6k5XEh9A7qN8N0RJ9bz4J7w/preview"
+      ]
+    },
+    "anchors": []
+  },
+  {
+    "page": 2,
+    "title": "Why do we need Quantum Mechanics? Stern-Gerlach",
+    "date": "24 sep. 2026 · 10:00 a. m.",
+    "speaker": "Dennis Quiso",
+    "chips": [],
+    "verRecurso": null,
+    "materials": {},
+    "anchors": []
+  },
+  {
+    "page": 2,
+    "title": "First Quantization and Operator Algebra",
+    "date": "24 sep. 2026 · 12:00 m.",
+    "speaker": "Rodrigo Horna",
+    "chips": [
+      "Diapositivas",
+      "Problemas"
+    ],
+    "verRecurso": [
+      "https://drive.google.com/file/d/1Gw9zbCWHkeeUPzqACNu2XIFr9A-LVrJq/preview"
+    ],
+    "materials": {
+      "Diapositivas": [
+        "https://drive.google.com/file/d/1Gw9zbCWHkeeUPzqACNu2XIFr9A-LVrJq/preview"
+      ],
+      "Problemas": [
+        "https://drive.google.com/file/d/1PDlQlqZetdXNOE-3aCRMo9lnNfzJO5jw/preview"
+      ]
+    },
+    "anchors": []
+  },
+  {
+    "page": 2,
+    "title": "Unitary Evolution and Schrödinger Equation",
+    "date": "25 sep. 2026 · 10:00 a. m.",
+    "speaker": "Antonio Romero",
+    "chips": [
+      "Diapositivas"
+    ],
+    "verRecurso": [
+      "https://drive.google.com/file/d/1NLq1-T1qocxHor-Wx89Q7etvvh_Kcclh/preview"
+    ],
+    "materials": {
+      "Diapositivas": [
+        "https://drive.google.com/file/d/1NLq1-T1qocxHor-Wx89Q7etvvh_Kcclh/preview"
+      ]
+    },
+    "anchors": []
+  },
+  {
+    "page": 3,
+    "title": "Introduction to Quantum Optical Devices",
+    "date": "25 sep. 2026 · 12:00 m.",
+    "speaker": "Rodrigo Horna",
+    "chips": [],
+    "verRecurso": null,
+    "materials": {},
+    "anchors": []
+  },
+  {
+    "page": 3,
+    "title": "Quantum Computing Fundamentals: Basic Quantum Systems",
+    "date": "26 sep. 2026 · 9:30 a. m.",
+    "speaker": "Enrique Cervantes",
+    "chips": [
+      "Diapositivas",
+      "Código",
+      "Problemas",
+      "Notas"
+    ],
+    "verRecurso": [
+      "https://drive.google.com/file/d/1mqHxnC4lD-vB6XVX1JLDTfi0oavEtNaD/preview"
+    ],
+    "materials": {
+      "Diapositivas": [
+        "https://drive.google.com/file/d/1mqHxnC4lD-vB6XVX1JLDTfi0oavEtNaD/preview"
+      ],
+      "Código": [
+        "/code/quantum-computing-fundamentals-basic-quantum-systems.html"
+      ],
+      "Problemas": [
+        "https://drive.google.com/file/d/1d8CvVMcPWoqTdw3NjtzGsImURNG73u4v/preview"
+      ],
+      "Notas": [
+        "https://drive.google.com/file/d/18vBConW1Gm6RL8pEXzpr_GnglvW6KA_u/preview"
+      ]
+    },
+    "anchors": []
+  },
+  {
+    "page": 3,
+    "title": "Quantum Computing Fundamentals: Qubit Operations",
+    "date": "27 sep. 2026 · 3:30 p. m.",
+    "speaker": "Marino A. Chuquilín",
+    "chips": [
+      "Diapositivas",
+      "Código"
+    ],
+    "verRecurso": [
+      "https://drive.google.com/file/d/1Sjwi5hWxQYUqFEED-DcmYZsxcb6fs-qz/preview"
+    ],
+    "materials": {
+      "Diapositivas": [
+        "https://drive.google.com/file/d/1Sjwi5hWxQYUqFEED-DcmYZsxcb6fs-qz/preview"
+      ],
+      "Código": [
+        "/code/qubit-operations.html"
+      ]
+    },
+    "anchors": [
+      {
+        "text": "Composer",
+        "href": "https://quantum.cloud.ibm.com/composer"
+      },
+      {
+        "text": "Bloch Sphere Simulator",
+        "href": "https://www.quantum-sandbox.com/"
+      }
+    ]
+  },
+  {
+    "page": 3,
+    "title": "Quantum Computing Fundamentals: Entanglement and Protocols",
+    "date": "28 sep. 2026 · 3:00 p. m.",
+    "speaker": "Kelvin Cahuana",
+    "chips": [],
+    "verRecurso": null,
+    "materials": {},
+    "anchors": []
+  },
+  {
+    "page": 3,
+    "title": "Complex Algebra and Mathematical Representation of Quantum States",
+    "date": "29 sep. 2026 · 7:00 p. m.",
+    "speaker": "Maria Pareja",
+    "chips": [],
+    "verRecurso": null,
+    "materials": {},
+    "anchors": []
+  },
+  {
+    "page": 3,
+    "title": "Qubit Geometry and Transformations",
+    "date": "29 sep. 2026 · 9:00 p. m.",
+    "speaker": "Maria Pareja",
+    "chips": [],
+    "verRecurso": null,
+    "materials": {},
+    "anchors": []
+  },
+  {
+    "page": 4,
+    "title": "Quantum Mathematical Formalism: Fourier and QFT",
+    "date": "30 sep. 2026 · 8:00 p. m.",
+    "speaker": "Maria Pareja",
+    "chips": [],
+    "verRecurso": null,
+    "materials": {},
+    "anchors": []
+  }
+]

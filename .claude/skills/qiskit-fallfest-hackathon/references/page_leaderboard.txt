@@ -1,0 +1,328 @@
+Skip to content
+Acerca de
+Ponentes
+Programa
+Leaderboard
+Recursos
+Tienda
+ES
+Postula
+Calendario
+Leaderboard
+
+Cada asistencia desde LUMA 2 suma 100 puntos (LUMA 18 suma 200 puntos, LUMA 19 suma 500 puntos, LUMA 20, 21 y 22 suman 700 puntos). LUMA 1 no suma puntos.
+
+Clasificación de participantes
+
+Top 10 · Asistencias confirmadas
+
+AL
+1
+
+Angela Linares Fujimoto
+
+21 sesiones
+
+PUNTOS
+4700
+JM
+2
+
+JOEL MISAICO PEREZ
+
+21 sesiones
+
+PUNTOS
+4500
+FG
+3
+
+Fernanda Garcia Samaniego
+
+19 sesiones
+
+PUNTOS
+4500
+4
+NA
+
+NICOLAS ANDRES HUAYLLA PINEDA
+
+20 asistencias
+
++0
+4400
+5
+JH
+
+Julio Huerta Mercedes
+
+17 asistencias
+
++0
+4400
+6
+JA
+
+Jhair Adolfo Gamero Campos
+
+19 asistencias
+
++0
+4200
+7
+GM
+
+Gerardo Miguel Tacay Terrazos
+
+18 asistencias
+
++0
+4000
+8
+MD
+
+Mayra Dayanne Saravia Camacuari
+
+18 asistencias
+
++0
+4000
+9
+LS
+
+Leyssy Sofía Mamani Yucra
+
+20 asistencias
+
++0
+3800
+10
+AC
+
+Alejandra Caceres Guevara
+
+18 asistencias
+
++0
+3500
+Puestos 1–10
+Anterior
+Siguiente tabla
+
+PROGRAMA
+
+Registra tu asistencia
+
+USUARIOS REGISTRADOS EN SESIONES QISKIT
+
+129
+
+Asistencia real registrada en la plataforma
+
+USUARIOS REGISTRADOS EN LUMA
+
+226
+
+Registro previo para validar el DNI
+
+LUMA 1 · 21 set. 2026, 6:00 p. m.
+
+0 pts
+Opening & Kick Off | IBM QGSS Advanced Recommendations
+
+Daniel Mamani · 56 registros en Luma
+
+Registro cerrado
+
+LUMA 2 · 21 set. 2026, 8:00 p. m.
+
++100 pts
+Quantum Environment and Initialization
+
+Nicole Fernández · 33 asistencias
+
+Registro cerrado
+
+LUMA 3 · 22 set. 2026, 10:00 a. m.
+
++100 pts
+Essential Mathematics
+
+Dennis Quiso · 39 asistencias
+
+Registro cerrado
+
+LUMA 4 · 22 set. 2026, 3:00 p. m.
+
++100 pts
+Essential Python Programming
+
+Dire Espinal · 37 asistencias
+
+Registro cerrado
+
+LUMA 5 · 23 set. 2026, 8:30 p. m.
+
++100 pts
+Quantum Computing Fundamentals: Classical Systems
+
+Renzo Cienfuegos · 43 asistencias
+
+Registro cerrado
+
+LUMA 6 · 24 set. 2026, 10:00 a. m.
+
++100 pts
+Why do we need Quantum Mechanics? Stern-Gerlach
+
+Dennis Quiso · 33 asistencias
+
+Registro cerrado
+
+LUMA 7 · 24 set. 2026, 12:00 p. m.
+
++100 pts
+First Quantization and Operator Algebra
+
+Rodrigo Horna · 32 asistencias
+
+Registro cerrado
+
+LUMA 8 · 25 set. 2026, 10:00 a. m.
+
++100 pts
+Unitary Evolution and Schrödinger Equation
+
+Antonio Romero · 29 asistencias
+
+Registro cerrado
+
+LUMA 9 · 25 set. 2026, 12:00 p. m.
+
++100 pts
+Introduction to Quantum Optical Devices
+
+Rodrigo Horna · 28 asistencias
+
+Registro cerrado
+
+LUMA 10 · 26 set. 2026, 9:30 a. m.
+
++100 pts
+Quantum Computing Fundamentals: Basic Quantum Systems
+
+Enrique Cervantes · 27 asistencias
+
+Registro cerrado
+
+LUMA 11 · 27 set. 2026, 3:30 p. m.
+
++100 pts
+Quantum Computing Fundamentals: Qubit Operations
+
+Marino A. Chuquilín · 31 asistencias
+
+Registro cerrado
+
+LUMA 12 · 28 set. 2026, 3:00 p. m.
+
++100 pts
+Quantum Computing Fundamentals: Entanglement and Protocols
+
+Kelvin Cahuana · 34 asistencias
+
+Registro cerrado
+
+LUMA 13 · 29 set. 2026, 7:00 p. m.
+
++100 pts
+Complex Algebra and Mathematical Representation of Quantum States
+
+Maria Pareja · 33 asistencias
+
+Registro cerrado
+
+LUMA 14 · 29 set. 2026, 9:00 p. m.
+
++100 pts
+Qubit Geometry and Transformations
+
+Maria Pareja · 21 asistencias
+
+Registro cerrado
+
+LUMA 15 · 30 set. 2026, 8:00 p. m.
+
++100 pts
+Quantum Mathematical Formalism: Fourier and QFT
+
+Maria Pareja · 31 asistencias
+
+Registro cerrado
+
+LUMA 16 · 28 set. 2026, 8:00 p. m.
+
++100 pts
+Review | Fundamental Concepts of Modern Quantum - J. J. Sakurai: A Statistical
+
+Daniel Mamani · 24 asistencias
+
+Registro cerrado
+
+LUMA 17 · 1 oct. 2026, 8:00 p. m.
+
++100 pts
+Review | Fundamental Concepts of Modern Quantum - J. J. Sakurai: A Statistical (Part 2) - Qiskit Fall Fest 2026
+
+Daniel Mamani · 17 asistencias
+
+Registro cerrado
+
+LUMA 18 · 9 oct. 2026, 6:00 p. m.
+
++200 pts
+Gen AI | Road to IBM Quantum Global Hackathon
+
+Gerardo Vilcamiza · 31 asistencias
+
+Registro cerrado
+
+LUMA 19 · 21 oct. 2026, 4:00 p. m.
+
++500 pts
+UNIVERSITY TOUR UPC (VIRTUAL)
+
+Jornada Completa · 31 asistencias
+
+Registro cerrado
+
+LUMA 20 · 22 oct. 2026, 12:00 p. m.
+
++700 pts
+UNIVERSITY HOST PUCP (AUDITORIO FISICA)
+
+Jornada Completa · 15 asistencias
+
+Registro cerrado
+
+LUMA 21 · 22 oct. 2026, 4:00 p. m.
+
++700 pts
+UNIVERSITY HOST PUCP (AUDITORIO INGENIERIA)
+
+Jornada Completa · 27 asistencias
+
+Registro cerrado
+
+LUMA 22 · 23 oct. 2026, 1:00 p. m.
+
++700 pts
+UNIVERSITY TOUR UTEC (AULA MAGNA)
+
+Jornada Completa · 24 asistencias
+
+Registro cerrado
+Inicio
+Clasificación
+Sesiones
