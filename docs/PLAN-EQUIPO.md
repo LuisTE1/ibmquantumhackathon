@@ -1,3 +1,16 @@
+﻿# ACTUALIZACIÓN (queda ~1 h 30 min) — LEER ESTO PRIMERO
+**Roles definitivos:** la **compañera = parte visual** (pp.py, ssets/) · **tú = motor** (engine/, 	ests/) · el **compañero = documentación** (docs/, README.md, cases/, PPT, video).
+**Alcance recortado (solo lo imprescindible):** 1 caso · 3 pruebas simples · acusación final · código de Qiskit visible · 1 pista del Cuy. **Fuera por falta de tiempo:** caso del día, estrellas, tres niveles de ayuda. El quiz antes/después se hace con 2–3 personas si da tiempo; si no, se presenta como *plan de validación* (**nunca inventar resultados**).
+**Sobre Qiskit:** lo cuántico es solo ~25 líneas en engine/circuits.py (ya verificado). No lo quiten: Qiskit es el 25 % de la nota y el reto pide el equivalente cuántico. Si falla en el evento, USE_QISKIT = False activa un respaldo con números aleatorios (con la misma interfaz) y se declara en la documentación.
+| Hora (si ahora son ~13:15) | Hito |
+|---|---|
+| 13:30 | Motor real listo (≈10 min) · pantalla base con datos del contrato · README y LIMITACIONES/FUENTES empezados |
+| 14:00 | **Merge:** juego completo de punta a punta |
+| 14:20 | Prueba con 2–3 personas · PPT |
+| 14:35 | Video de 1–2 min · README final · merge final |
+| 14:45 | **Entrega al portal** |
+
+---
 # Plan del equipo — Quantum Files (Inspector Cuy)
 IBM Quantum Hackathon 2026 · Categoría EdTech · Entrega al portal **antes de las 14:45** · Presentación 15:00–16:40 (los 3 presentes)
 
@@ -82,3 +95,4 @@ Entorno: `C:\Users\luist\qiskit-env\Scripts\Activate.ps1` (o `pip install -r req
 - [ ] Hay evidencia de la prueba con jugadores.
 - [ ] Hay slide de limitaciones y de fuentes.
 - [ ] Entregables subidos y enlaces verificados.
+

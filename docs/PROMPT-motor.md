@@ -1,4 +1,4 @@
-# Prompts del motor (Persona 2) — para usar con Claude Code y Codex en la MISMA carpeta
+﻿# Prompts del motor (Persona 2) — para usar con Claude Code y Codex en la MISMA carpeta
 
 Carpeta: C:\Users\luist\Desktop\proyecto_hackaton_IBM · Entorno: `C:\Users\luist\qiskit-env\Scripts\python.exe` (qiskit 2.6.1)
 Para dividir el trabajo sin pisarse: **Claude = `engine/circuits.py`**, **Codex = `tests/test_circuits.py` + `engine/find_seed.py`**. Ninguno toca `app.py`, `cases/` ni `docs/`.
@@ -28,3 +28,4 @@ Validaciones: `shots >= 1` (lanza ValueError si no); `theta_deg` cualquier real.
 1) Crea `tests/test_circuits.py` con pytest (importa desde `engine.circuits` y `engine.stats`). Pruebas: (a) `coin_counts(10, 0)` == `{"0": 3, "1": 7}` y es repetible con la misma semilla; (b) n0 + n1 == shots para varios shots y ambas claves siempre presentes (incluso con shots=1); (c) con 20000 shots, la frecuencia de unos de `coin_counts` está en 0.5 ± 0.02; (d) `rx_counts(0, ...)` da 0 unos y `rx_counts(180, ...)` da todos unos; (e) con 20000 shots, `rx_counts(120, ...)` tiene frecuencia de unos en 0.75 ± 0.02, comparada con `prob_one(120)`; (f) `p_value_at_least(7, 10)` ≈ 176/1024; (g) `shots=0` lanza ValueError; (h) solución única del caso: lee `cases/caso1.json` y comprueba que exactamente un sospechoso cumple (declaración falsa Y acceso == hora del cambio de configuración) y que es "lola".
 2) Crea `engine/find_seed.py`: función `find_seed(target_ones=7, shots=10, max_seed=1000) -> int` que busque la primera semilla para la que `coin_counts(shots, seed)["1"] == target_ones`, más un bloque `if __name__ == "__main__":` que imprima la semilla encontrada y cuántas de las primeras 200 sirven (esperado: semilla 0 y 31 de 200).
 Ejecuta `python -m pytest -q`: las pruebas (a)–(e) fallarán hasta que Claude termine `circuits.py`; espera a que ese archivo deje de ser un stub (puedes revisar `git status` o el contenido) y vuelve a ejecutar hasta que todo pase. Reporta el resultado.
+
