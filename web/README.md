@@ -6,7 +6,7 @@ Juego de investigación para móvil y web. El **Detective Cuy** recorre Qori Lab
 Tras jugar, la persona puede explicar por qué 7 unos en 10 mediciones no prueban una alteración, predecir el resultado de H→H frente a H→X y justificar una acusación con registros y reconstrucción.
 
 ## Cómo está hecho
-- **Estático en public/** (HTML/CSS/JS sin compilación; la API de Python está en pi/) + **PWA** (manifest + service worker: instalable y funciona sin conexión).
+- **Estático en `public/`** (HTML/CSS/JS sin compilación; la API de Python está en `api/`) + **PWA** (manifest + service worker: instalable y funciona sin conexión).
 - **Qiskit real** en `api/run.py` (función de Python de Vercel, `qiskit>=2.1`): ejecuta el circuito de 1 qubit con `StatevectorSampler`.
 - **Respaldo local** `js/sim.js`: si la API no responde (o sin conexión), el juego usa un simulador de 1 qubit en el navegador. Cada resultado muestra su origen: «⚛️ Qiskit (servidor)» o «💻 Simulador local». `tests/test_web.py` comprueba que el simulador coincide con Qiskit en 63 secuencias de compuertas.
 - Controles: **WASD/flechas + E** en PC; **cruceta, botón de acción y toques** en móvil. Teclado y etiquetas ARIA; progreso guardado en `localStorage`.
@@ -24,6 +24,7 @@ Pruebas del núcleo: `python -m pytest tests/test_web.py -q` (desde la raíz del
 - Redesplegar tras un cambio: `cd web` y `npx vercel deploy --prod --yes` (requiere sesión de Vercel iniciada).
 - Instalar como app: abrir la URL en el móvil → menú del navegador → **Instalar app / Añadir a pantalla de inicio**.
 - No está conectado a GitHub para despliegue automático (`vercel git connect` requiere instalar la app de Vercel en GitHub).
+
 ## Qué es real y qué es simulación
 Los circuitos son de Qiskit (1 qubit) y **se simulan en un computador clásico**: no es hardware cuántico y **no afirmamos ventaja cuántica**. Los personajes, el laboratorio y el caso son ficticios. La conexión con QML (kernels, QNN, descenso de gradiente) queda para los siguientes casos de la serie.
 
