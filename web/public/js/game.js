@@ -90,6 +90,12 @@
   const qcode = (gates, start = "0", measure = true) => ["from qiskit import QuantumCircuit", "qc = QuantumCircuit(1, 1)"].concat(start === "1" ? ["qc.x(0)   # empezar en |1⟩"] : [])
     .concat(gates.map((g) => `qc.${g}(0)` + (g === "h" ? "   # mezcla 0 y 1" : "   # voltea 0↔1"))).concat(measure ? ["qc.measure(0, 0)   # mirar la monedita"] : []).join("\n");
   const codeBox = (gates, start, measure) => `<details class="code"><summary>👩‍💻 Así lo escribe Qiskit</summary><pre>${qcode(gates, start, measure)}</pre></details>`;
+  const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const coinFor = (v, flip) => { const k = Math.abs(v[0]) > 0.999 ? "0" : Math.abs(v[1]) > 0.999 ? "1" : "?"; return `<span class="cn big ${k === "1" ? "c1" : k === "0" ? "c0" : "cq"} ${flip ? "flip" : ""}" title="${k === "?" ? "girando: 50/50" : "moneda en " + k}">${k}</span>`; };
+  const coinsRow = (c) => `<div class="coinrow">${shuffle([...Array(c["0"]).fill("0"), ...Array(c["1"]).fill("1")]).map((v) => `<span class="cn cq" data-v="${v}">?</span>`).join("")}</div>`;
+  function revealCoins(root) { // las monedas giran (superposición) y luego se voltean al resultado medido
+    root.querySelectorAll(".cn[data-v]").forEach((c, i) => setTimeout(() => { c.classList.remove("cq"); c.classList.add("flip", c.dataset.v === "1" ? "c1" : "c0"); setTimeout(() => { c.textContent = c.dataset.v; }, 330); if (i % 3 === 0) sfx.hit(); }, 250 + i * 110));
+  }
   const coach = (html, kind = "") => `<div class="coach ${kind}"><img src="img/cuy_idle.png" alt="Profe Cuy"><div class="bub">${html}</div></div>`;
   const good = (html) => coach("✅ " + html, "good");
   const bad = (why, tip) => coach(`🙈 Oye, <b>no es así</b>: ${why}<br>💡 <b>Te recomiendo</b> ${tip}`, "bad");
@@ -186,11 +192,11 @@
   }
   const withLesson = (key, title, slides, start) => (S.seen[key] ? start() : lesson(key, title, slides, start));
   function sandbox(box) { // demo interactiva: aplica X o H y mira cómo se mueve la flecha
-    let v = START["1"].slice(), hist = [];
+    let v = START["1"].slice(), hist = [], fl = false;
     const draw = () => {
-      box.innerHTML = `<div class="sbx"><div>${bloch(v, 120)}<small>${stateText(v)}</small></div><div class="sbr">${circuit(hist, { start: "1", measure: false })}<div class="row"><button class="btn" data-g="x">⚡ X</button><button class="btn" data-g="h">🌀 H</button><button class="btn" data-r="1">↺ Reiniciar</button></div></div></div>`;
-      box.querySelectorAll("[data-g]").forEach((b) => b.onclick = () => { v = applyG(b.dataset.g, v); hist.push(b.dataset.g); sfx.hit(); if (hist.length > 5) hist.shift(); draw(); });
-      box.querySelector("[data-r]").onclick = () => { v = START["1"].slice(); hist = []; draw(); };
+      box.innerHTML = `<div class="sbx"><div>${bloch(v, 120)}<div class="coinbig">${coinFor(v, fl)}</div><small>${stateText(v)}</small></div><div class="sbr">${circuit(hist, { start: "1", measure: false })}<div class="row"><button class="btn" data-g="x">⚡ X</button><button class="btn" data-g="h">🌀 H</button><button class="btn" data-r="1">↺ Reiniciar</button></div></div></div>`;
+      box.querySelectorAll("[data-g]").forEach((b) => b.onclick = () => { v = applyG(b.dataset.g, v); hist.push(b.dataset.g); fl = true; sfx.hit(); if (hist.length > 5) hist.shift(); draw(); });
+      box.querySelector("[data-r]").onclick = () => { v = START["1"].slice(); hist = []; fl = false; draw(); };
     };
     draw();
   }
@@ -282,7 +288,7 @@
       { say: "¡Bichos! Cada glitch es un <b>qubit</b>: una monedita especial. <b>Cara = 0</b> y <b>sello = 1</b>. Para eliminarlo hay que dejarlo en <b>0</b>.", art: `<div class="coins"><span>🪙<small>0 (cara)</small></span><span>🪙<small>1 (sello)</small></span></div>` },
       { say: "Para ver en qué estado está, miramos esta <b>flecha</b>: si apunta <b>arriba</b> es 0, si apunta <b>abajo</b> es 1, y si apunta a un <b>lado</b> es 50/50 (mitad y mitad).", art: bloch(START["0"], 120) + bloch(START["1"], 120) + bloch(START["+"], 120) },
       { say: "Tienes 2 herramientas. <b>⚡X</b> le da la vuelta a la moneda: de 1 pasa a 0. <b>🌀H</b> la mezcla: de 0 pasa a 50/50 y de 50/50 vuelve a 0. ¡Pruébalas tú!", art: "", demo: true },
-      { say: "¡A jugar! <b>Corre</b> (WASD o la cruceta) hacia un bicho 🐛. Cuando estés cerca se ilumina: dispara <b>⚡X</b> (tecla J) o <b>🌀H</b> (tecla K). Mira el <b>panel del Profe Cuy</b>: ahí ves su circuito.", art: `<div class="coins"><span>🏃<small>correr</small></span><span>⚡<small>X (J)</small></span><span>🌀<small>H (K)</small></span></div>` },
+      { say: "¡A jugar! <b>Corre</b> (WASD o la cruceta) hacia un bicho 🐛. Cuando estés cerca se ilumina: pulsa la tecla <b>X</b> (⚡) o la tecla <b>H</b> (🌀). Mira el <b>panel del Profe Cuy</b>: ahí ves su circuito.", art: `<div class="coins"><span>🏃<small>correr</small></span><span>⚡<small>tecla X</small></span><span>🌀<small>tecla H</small></span></div>` },
     ]],
     glitch3: ["Glitches difíciles", [
       { say: "Cuidado: |+⟩ y |−⟩ <b>parecen iguales</b> (los dos son 50/50) pero la flecha apunta a lados <b>distintos</b>. Con H: |+⟩ va a 0 y |−⟩ va a 1.", art: bloch(START["+"], 110) + bloch(START["-"], 110) },
@@ -334,7 +340,7 @@
       x: 20 + Math.random() * 60, y: 30 + Math.random() * 55, vx: (Math.random() - 0.5) * 10, vy: (Math.random() - 0.5) * 10, t: 0 }));
     foes.room = S.room; foes.wave = w; fightMoves = 0; fightMin = WAVES[w].reduce((n, k) => n + MINM[k], 0); curTgt = null;
     foes.forEach(attachFoe); document.body.classList.add("fight");
-    panel(`¡Glitches! 🐛 Corre hacia uno y pulsa <b>⚡X</b> o <b>🌀H</b> (teclas <b>J</b> / <b>K</b>). Déjalo en <b>0</b> (flecha arriba).`);
+    panel(`¡Glitches! 🐛 Corre hacia uno y pulsa <b>⚡X</b> o <b>🌀H</b> (teclas <b>X</b> y <b>H</b>). Déjalo en <b>0</b> (flecha arriba).`);
   }
   function nearestFoe(max = 26) { let best = null, bd = max; foes.forEach((f) => { if (f.dead) return; const d = dist(S.px, S.py, f.x, f.y); if (d < bd) { bd = d; best = f; } }); return best; }
   let focus = null, pending = null;
@@ -374,7 +380,7 @@
   // panel lateral del Profe Cuy (fuera del escenario)
   function panel(msg, f) {
     $("#sc-bub").innerHTML = msg;
-    $("#sc-art").innerHTML = f ? `<div class="side"><div class="sidea">${bloch(f.v, 112)}<small>${stateText(f.v)}</small></div><div class="sideb">${circuit(f.hist, { start: f.k, measure: false })}<pre class="mini-code">${qcode(f.hist, f.k === "1" ? "1" : "0", false).split("\n").slice(1).join("\n")}</pre></div></div>` : "";
+    $("#sc-art").innerHTML = f ? `<div class="side"><div class="sidea">${bloch(f.v, 112)}<div class="coinbig">${coinFor(f.v, false)}</div><small>${stateText(f.v)}</small></div><div class="sideb">${circuit(f.hist, { start: f.k, measure: false })}<pre class="mini-code">${qcode(f.hist, f.k === "1" ? "1" : "0", false).split("\n").slice(1).join("\n")}</pre></div></div>` : "";
   }
   function panelIdle() {
     const t = ["Habla con Inti 🦅. ¡Sigue la flecha ▼!", "Ve a QUILLA 🌀.", "Ve a la consola 🖥️ en la sala de Control.", "Habla con Rumi 🦊 en el Taller.", "Abre la caja 📦.", "Habla con Sami 🦙.", "Repara QUILLA 🌀.", "¡Listo! Prueba los desafíos 🧪."];
@@ -392,7 +398,7 @@
     $("#helpL").onclick = () => lesson("sample", L.sample[0], L.sample[1], runSample);
     $("#p1run").onclick = async () => {
       const r = await runCircuit(["h"], 10); hist.push(`${r.counts["1"]}/${r.counts["0"]}`); S.runs++;
-      $("#p1out").innerHTML = bars(r.counts, 10) + badgeSrc(r); $("#p1hist").innerHTML = "Unos/ceros: " + hist.join(" · ") + (hist.length < 3 ? ` <i>(${3 - hist.length} más)</i>` : "");
+      $("#p1out").innerHTML = coinsRow(r.counts) + bars(r.counts, 10) + badgeSrc(r); revealCoins($("#p1out")); $("#p1hist").innerHTML = "Unos/ceros: " + hist.join(" · ") + (hist.length < 3 ? ` <i>(${3 - hist.length} más)</i>` : "");
       if (hist.length >= 3 && !$("#p1q").innerHTML) {
         $("#p1q").innerHTML = `<div class="q"><p><b>Inti dice: «7 unos y 3 ceros prueban un sabotaje». ¿Tiene razón?</b></p>
           <label><input type="radio" name="a" value="si"> Sí, 7 de 10 es mucho</label><label><input type="radio" name="a" value="no"> No, pudo ser azar</label>
@@ -454,7 +460,8 @@
         const op = $("#d" + inp).value, gates = (inp === 1 ? ["x"] : []).concat(op === "x" ? ["x"] : []), want = inp === 0 ? "1" : "0", r = await runCircuit(gates, 10);
         const pass = r.probs[want] === 1; ok = ok && pass;
         if (!pass) why.push(inp === 0 ? "la entrada <b>0</b> debía salir <b>1</b> y sin X se queda en 0" : "la entrada <b>1</b> debía salir <b>0</b>, pero con el circuito elegido sigue en 1");
-        html += `<div class="res">${pass ? "✅" : "❌"} Entrada ${inp}${inp === 1 ? " (empieza en 1)" : ""}: ${circuit(gates, { start: inp === 1 ? "1" : "0" })} salió ${r.counts["1"] === 10 ? "1" : r.counts["0"] === 10 ? "0" : "mezcla"} (debía ${want}) ${badgeSrc(r)}</div>`;
+        const outV = r.counts["1"] === 10 ? "1" : r.counts["0"] === 10 ? "0" : "?";
+        html += `<div class="res">${pass ? "✅" : "❌"} Entrada <span class="cn c${inp}">${inp}</span> ${circuit(gates, { start: inp === 1 ? "1" : "0" })} ➜ <span class="cn flip ${outV === "1" ? "c1" : outV === "0" ? "c0" : "cq"}">${outV}</span> (debía salir ${want}) ${badgeSrc(r)}</div>`;
       }
       $("#dout").innerHTML = html;
       if (ok) {
@@ -515,10 +522,10 @@
       mbody.querySelectorAll("[data-c]").forEach((b) => b.onclick = () => { chips[+b.dataset.c].on = !chips[+b.dataset.c].on; draw(); });
       $("#rrun").onclick = async () => {
         const ok = gates.length === 1, r = await runCircuit(gates, 10);
-        $("#rout").innerHTML = bars(r.counts, 10) + badgeSrc(r) + (ok ? good("¡Diseño restaurado: |0⟩ → H → medir!") + `<button class="btn big" id="rend">Reactivar QUILLA ➜</button>`
+        $("#rout").innerHTML = coinsRow(r.counts) + bars(r.counts, 10) + badgeSrc(r) + (ok ? good("¡Diseño restaurado: |0⟩ → H → medir!") + `<button class="btn big" id="rend">Reactivar QUILLA ➜</button>`
           : gates.length === 0 ? bad("sin ninguna H el qubit queda siempre en 0: no es el diseño.", "dejar <b>exactamente una H</b> para que vuelva el 50/50.")
           : bad("con <b>dos H</b> seguidas se cancelan y todo sale 0 (justo el sabotaje).", "quitar una de las dos H para dejar el diseño aprobado."));
-        if (ok) { sfx.ok(); $("#rend").onclick = () => { closeModal(); setStage(7); award(10); if (!S.hints) badge("sinpistas"); burst(); ending(); }; } else { sfx.bad(); shake($("#rout")); }
+        revealCoins($("#rout")); if (ok) { sfx.ok(); $("#rend").onclick = () => { closeModal(); setStage(7); award(10); if (!S.hints) badge("sinpistas"); burst(); ending(); }; } else { sfx.bad(); shake($("#rout")); }
       };
     };
     draw();
@@ -541,8 +548,8 @@
         $("#cgo").disabled = true;
         const r = await runCircuit(g, 20), ok = v === ans, label = { "0": "siempre 0", "1": "siempre 1", mix: "50 / 50" }[ans];
         if (ok) { streak++; sfx.ok(); award(5); if (streak > S.best) { S.best = streak; save(); } if (streak === 5) badge("racha"); } else { streak = 0; sfx.bad(); shake($("#cfb")); }
-        $("#cfb").innerHTML = (ok ? good(`¡Correcto! Era <b>${label}</b>.`) : bad(`el resultado era <b>${label}</b>.`, "seguir la flecha paso a paso (abajo): en cada compuerta se mueve.")) + traceRow(g) + bars(r.counts, 20) + badgeSrc(r) + `<button class="btn big" id="cnext">Siguiente ➜</button>`;
-        $("#cnext").onclick = draw;
+        $("#cfb").innerHTML = (ok ? good(`¡Correcto! Era <b>${label}</b>.`) : bad(`el resultado era <b>${label}</b>.`, "seguir la flecha paso a paso (abajo): en cada compuerta se mueve.")) + traceRow(g) + coinsRow(r.counts) + bars(r.counts, 20) + badgeSrc(r) + `<button class="btn big" id="cnext">Siguiente ➜</button>`;
+        revealCoins($("#cfb")); $("#cnext").onclick = draw;
       };
     };
     draw();
@@ -609,8 +616,8 @@
   const MAP = { w: "u", arrowup: "u", s: "d", arrowdown: "d", a: "l", arrowleft: "l", d: "r", arrowright: "r" };
   addEventListener("keydown", (e) => {
     const k = e.key.toLowerCase();
-    if ((k === "j" || k === "1" || k === "x") && foes.length && modal.hidden && dlg.hidden) { attack("x"); e.preventDefault(); return; }
-    if ((k === "k" || k === "2" || k === "h") && foes.length && modal.hidden && dlg.hidden) { attack("h"); e.preventDefault(); return; }
+    if (k === "x" && foes.length && modal.hidden && dlg.hidden) { attack("x"); e.preventDefault(); return; }
+    if (k === "h" && foes.length && modal.hidden && dlg.hidden) { attack("h"); e.preventDefault(); return; }
     if (MAP[k]) { keys[MAP[k]] = true; target = null; autoId = null; pending = null; e.preventDefault(); }
     else if ((k === "e" || k === " " || k === "enter") && !e.repeat) {
       if (!dlg.hidden) { nextLine(); e.preventDefault(); } else if (modal.hidden && nearId) { interact(nearId); e.preventDefault(); }
