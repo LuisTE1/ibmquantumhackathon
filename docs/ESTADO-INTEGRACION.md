@@ -1,6 +1,6 @@
 # Estado de integración y fuentes de verdad
 
-**Revisión:** 24 de octubre de 2026. La rama `docs/edtech-final` parte de la versión más reciente de `origin/main`; `feat/contenido` se conserva como respaldo. Las ramas habían divergido: `origin/main` tenía 11 commits que no estaban en la rama de contenido y esta tenía un commit de contenido que no estaba en main. Por eso se recuperan documentos de forma selectiva y no se hace merge completo de la rama antigua.
+**Revisión:** 24 de octubre de 2026. Esta rama conserva el commit de Persona 3 y ya integró mediante merge normal los cuatro commits nuevos de `origin/main` hasta `ee3767a394c4be4cf6b49567badef8145b664f4a`. La rama `feat/contenido` se conserva como respaldo. La primera consolidación partió de `e2c9a49`; no se hizo merge del contenido completo de `feat/contenido`.
 
 ## Qué describe cada fuente
 
@@ -43,10 +43,9 @@ Para diez resultados Bernoulli con p = 0,5, `P(X ≥ 7) = 0,171875` es unilatera
 
 El 24 de octubre de 2026 se hicieron solicitudes HTTP de solo lectura a `https://quantum-files.vercel.app/`:
 
-- La portada respondió 200 y su título fue “Quantum Files · El experimento fantasma”.
-- `game.js`, `sim.js`, `sw.js` y `manifest.webmanifest` respondieron 200.
+- La portada respondió 200 con el título “Quantum Files · El experimento fantasma”. CSS, JavaScript, manifest y service worker también respondieron 200.
+- `index.html`, `game.js`, `sim.js`, `styles.css` y `sw.js` publicados coincidieron byte a byte, tras normalizar saltos de línea, con los assets del `origin/main` actualizado. El manifest expone el título esperado del proyecto.
 - GET `/api/run` respondió 200 con `source: qiskit` y versión 2.6.1.
 - POST con H–H, 20 shots y semilla 1 respondió 200, probabilidades 1/0 y conteos 20/0.
-- Una comparación de los assets publicados con el árbol de `origin/main` encontró `sim.js` idéntico, pero `index.html`, `game.js` y `sw.js` distintos. El service worker tenía igual longitud, no igual contenido.
 
-Esto demuestra disponibilidad puntual de la página y API, no autoría del commit ni identidad de la versión de entrega. Tampoco se hizo una prueba de navegación automatizada del juego en navegador. El enlace debe describirse como smoke verificado, no como release vinculado a esta rama.
+La disponibilidad y coincidencia de assets/API se verificaron; no se leyó metadata de origen del deployment ni se ejecutó una sesión de navegador automatizada. No se confirma aquí que la URL sea el build final designado por quien administra Vercel. Los tests E2E nuevos pasan comprobación de sintaxis, pero no se ejecutaron porque faltan Playwright y Chrome; `verify.js` y `play6.js` cambian la sala directamente por estado de prueba, así que no prueban el recorrido natural por puertas. La demo está verificada a nivel de smoke de recursos/API, no de recorrido completo.

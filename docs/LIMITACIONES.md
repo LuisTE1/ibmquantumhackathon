@@ -30,7 +30,7 @@ El código contiene controles de teclado y táctiles, etiquetas ARIA, regiones d
 
 La PWA web es la aplicación actual. El Streamlit de `app.py`, `engine/`, `CONTRATO.md` y varios JSON raíz son materiales heredados y no describen el runtime de la PWA. `cases/caso1_v2.json` conserva el expediente aprobado como referencia, pero el juego web mantiene narrativa y cuestionario dentro de `web/public/js/game.js`.
 
-La demo `https://quantum-files.vercel.app/` respondió a comprobaciones HTTP el 24 de octubre de 2026, incluida una petición H–H a la API. Los assets remotos `index.html`, `game.js` y `sw.js` no coincidieron con el origen inspeccionado; no se confirmó la rama o el commit del despliegue ni que sea la versión de entrega. No se comprobó el recorrido completo en navegador.
+La demo `https://quantum-files.vercel.app/` respondió a comprobaciones HTTP el 24 de octubre de 2026, incluidos los assets principales y una petición H–H a la API. HTML, CSS, JavaScript y service worker comparados coinciden con `origin/main` actual. No se ejecutaron los scripts de navegador porque faltan Playwright y Chrome; por eso no se verificó el recorrido completo, la navegación natural entre salas ni la experiencia en una sesión limpia. No se consultó metadata de Vercel para confirmar qué deployment/build es el designado para la entrega.
 
 ## Reproducibilidad
 

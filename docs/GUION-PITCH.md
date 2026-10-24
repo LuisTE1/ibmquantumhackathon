@@ -1,6 +1,6 @@
 # Guion de pitch — 2:30 a 3:00 minutos
 
-**Preparación:** usar la PWA de la versión revisada en el momento de presentar. El smoke test del enlace público confirma que responde, pero sus assets no coinciden con `origin/main`; confirmar el despliegue o presentar una build local antes de llamarla versión final.
+**Preparación:** la página y los assets principales publicados coinciden con `origin/main` actual y la API responde con Qiskit 2.6.1. El recorrido E2E no pudo ejecutarse en este entorno por falta de Playwright y Chrome; ensayar la navegación completa en el dispositivo de presentación antes de iniciar el pitch.
 
 **Duración estimada del texto:** 2:40–2:55 a ritmo natural, más las acciones de la demostración. Ensayar con cronómetro.
 

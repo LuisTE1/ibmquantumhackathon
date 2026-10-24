@@ -2,7 +2,7 @@
 
 ## Estado de evidencia
 
-No hay resultados de sesiones con participantes registrados. Las tablas de este documento están vacías y deben completarse con observaciones reales. La demo pública pasó un smoke test HTTP el 24 de octubre de 2026; eso no prueba el recorrido completo en navegador ni identifica el commit desplegado. Ver `ESTADO-INTEGRACION.md`.
+No hay resultados de sesiones con participantes registrados. Las tablas de este documento están vacías y deben completarse con observaciones reales. El 24 de octubre de 2026 se verificaron por HTTP la página, assets principales y API pública; no se ejecutó el recorrido completo en navegador. Ver `ESTADO-INTEGRACION.md`.
 
 ## Pruebas técnicas reproducibles
 
@@ -17,6 +17,10 @@ python -m pytest -q tests/test_web.py
 `tests/test_web.py` verifica probabilidades conocidas, conteos repetibles, entradas inválidas, el handler HTTP y la coincidencia entre las probabilidades Qiskit y JavaScript para 31 secuencias H/X de longitud cero a cuatro. Son pruebas del núcleo técnico; no validan comprensión, facilidad de uso ni eficacia educativa. Si Node.js falta, la prueba de comparación se marca como omitida por el propio test.
 
 En la revisión del 24 de octubre de 2026, con Python 3.14.4, `pytest -q --continue-on-collection-errors` informó 17 aprobadas, 2 fallidas y 1 error de colección. Las dos fallidas son legacy: `tests/test_circuits.py::test_moneda_semilla_0_da_7_y_3` y `tests/test_game.py::test_prueba1_p_valor_y_mensaje` esperaban siete unos con semilla 0 y observaron seis. La colección de `tests/test_web.py` se detuvo porque Qiskit no está instalado. No se modificó código para cambiar esos resultados. Con `pytest -q` sin la opción de continuar, la colección de web se interrumpe antes de ejecutar el resto. La suite web sigue pendiente en un entorno con Qiskit; estas pruebas legacy no validan la PWA.
+
+## Pruebas de navegador del último main
+
+El repositorio incluye `tests/e2e/verify.js`, `play6.js` y `play7.js`; sus requisitos documentados son Node 20+, Playwright y Google Chrome. En este entorno Node está instalado, pero Playwright y Chrome no están disponibles. Los tres scripts pasan `node --check`, que solo verifica sintaxis; las pruebas E2E quedaron **omitidas**, no aprobadas. Además, los guiones `verify.js` y `play6.js` cambian la sala mediante el estado interno de prueba, por lo que no certifican por sí solos la navegación natural por puertas. La navegación entre salas y el recorrido real deben completarse en un navegador con esos requisitos.
 
 ## Protocolo piloto: 2 a 5 personas
 

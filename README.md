@@ -31,7 +31,7 @@ La PWA contiene sus propios diálogos, desafíos y preguntas en JavaScript. No c
 
 [https://quantum-files.vercel.app/](https://quantum-files.vercel.app/)
 
-El 24 de octubre de 2026 se comprobó por HTTP que la página, el service worker, el manifest y `/api/run` responden. La API devolvió `source: qiskit`, versión 2.6.1, y una petición H–H de 20 shots produjo 20 resultados 0. Sin embargo, los archivos publicados `index.html`, `game.js` y `sw.js` no coincidieron con los de `origin/main` en esta revisión (`sim.js` sí coincidió). El smoke test acredita disponibilidad y respuestas de la API; no acredita qué commit produjo el despliegue ni que sea la versión que se entregará. Conviene confirmar ese vínculo antes de presentarla como demo final validada. La revisión tampoco fue una prueba completa de la interfaz en navegador.
+El 24 de octubre de 2026 se comprobó por HTTP que la página, CSS, JavaScript, service worker y manifest responden. `index.html`, `game.js`, `sim.js`, `styles.css` y `sw.js` publicados coinciden con los assets del `origin/main` actual; el manifest presenta el nombre esperado del proyecto. GET `/api/run` devolvió `source: qiskit`, versión 2.6.1, y POST H–H con 20 shots devolvió probabilidades 1/0 y conteos 20/0. Es un smoke test de recursos y API, no una prueba de navegación completa ni una comprobación de metadatos internos del build de Vercel.
 
 ## Arquitectura y simulación
 
@@ -67,7 +67,7 @@ python -m pip install pytest
 python -m pytest -q tests/test_web.py
 ~~~
 
-Las pruebas comparan probabilidades de Qiskit y JavaScript para las 31 secuencias de cero a cuatro compuertas H/X, además de revisar probabilidades conocidas, conteos repetibles, entradas inválidas y el handler HTTP. Node.js permite ejecutar la comparación JS; la prueba se omite si Node no está instalado. Para resultados de esta revisión y sus dependencias pendientes, consultar [Validación](docs/VALIDACION.md) y [Estado de integración](docs/ESTADO-INTEGRACION.md).
+Las pruebas comparan probabilidades de Qiskit y JavaScript para las 31 secuencias de cero a cuatro compuertas H/X, además de revisar probabilidades conocidas, conteos repetibles, entradas inválidas y el handler HTTP. Node.js permite ejecutar la comparación JS; la prueba se omite si Node no está instalado. Las pruebas de navegador y sus requisitos están descritos en [tests/e2e/README.md](tests/e2e/README.md). Para el resultado real de esta revisión y las pruebas pendientes, consultar [Validación](docs/VALIDACION.md) y [Estado de integración](docs/ESTADO-INTEGRACION.md).
 
 ## Fuentes, créditos y documentos
 
