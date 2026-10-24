@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Quantum Files · El experimento fantasma</title>
+  <meta name="description" content="Juego de detectives con el Detective Cuy: aprende probabilidad, qubits y compuertas cuánticas con Qiskit investigando un sabotaje en Qori Lab.">
+  <meta name="theme-color" content="#0e2a2f">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hud">
+    <div class="obj-banner" role="status" aria-live="polite"><span>🎯</span><b id="objective"></b></div>
+    <div class="hud-btns">
+      <span id="roomname" class="room"></span>
+      <button id="btn-book" class="ib" aria-label="Libreta de evidencias">📓 <span id="evcount">0</span></button>
+      <button id="btn-reset" class="ib" aria-label="Reiniciar caso">⟲</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="stage" class="stage" aria-label="Escenario del laboratorio">
+      <div id="player" class="player"><img id="pimg" src="img/cuy_idle.png" alt="Detective Cuy" draggable="false"><span class="shadow"></span></div>
+    </div>
+    <p class="help">WASD / flechas para moverte · E o toca para interactuar · 📓 libreta de evidencias</p>
+  </main>
+
+  <div class="controls" aria-label="Controles táctiles">
+    <div class="dpad">
+      <button data-dir="u" aria-label="Arriba">▲</button>
+      <button data-dir="l" aria-label="Izquierda">◀</button>
+      <button data-dir="d" aria-label="Abajo">▼</button>
+      <button data-dir="r" aria-label="Derecha">▶</button>
+    </div>
+    <button id="btn-act" class="act" aria-label="Interactuar">E · Interactuar</button>
+  </div>
+
+  <section id="dialog" class="dialog" hidden role="dialog" aria-live="polite">
+    <div id="d-av" class="av"></div>
+    <div class="dtxt"><b id="d-name"></b><p id="d-text"></p><small>Toca, E o Espacio para continuar</small></div>
+  </section>
+
+  <section id="modal" class="modal" hidden role="dialog" aria-modal="true">
+    <div class="sheet">
+      <button id="mclose" class="x" aria-label="Cerrar">✕</button>
+      <div id="mbody"></div>
+    </div>
+  </section>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="js/sim.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
