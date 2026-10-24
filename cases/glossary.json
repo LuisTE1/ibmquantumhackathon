@@ -1,1 +1,16 @@
-{"probabilidad": "Número entre 0 y 1 que dice qué tan posible es un resultado.", "qubit": "Unidad básica de información cuántica; al medirlo da 0 o 1.", "shots": "Cantidad de veces que repites una medición."}
+{
+  "probabilidad": "Número entre 0 y 1 que indica qué tan posible es un resultado según un modelo. No garantiza cuántas veces aparecerá en una muestra pequeña.",
+  "frecuencia observada": "Veces que apareció un resultado divididas entre el total de intentos. Si salen 7 unos en 10 intentos, su frecuencia es 0,7.",
+  "Bernoulli": "Modelo de un intento con dos resultados, como 1 y 0. La probabilidad de 1 es p y la de 0 es 1 − p.",
+  "qubit": "Unidad básica de información cuántica. Al medirlo en la base usada en este juego, se obtiene 0 o 1; su estado determina las probabilidades.",
+  "superposición": "Estado cuántico que combina los estados 0 y 1 mediante amplitudes. Al medir se obtiene un solo resultado; sus probabilidades dependen de esas amplitudes.",
+  "medición": "Operación que obtiene un resultado clásico de un sistema cuántico. En estos ejemplos produce 0 o 1 y deja el qubit en el estado correspondiente.",
+  "Hadamard": "Puerta H que, aplicada a un qubit en 0, prepara iguales probabilidades de medir 0 o 1. Dos H seguidas, sin medir entre ellas, recuperan el estado inicial.",
+  "X": "Puerta que transforma el estado 0 en 1 y el estado 1 en 0. Dos X seguidas recuperan el estado inicial.",
+  "circuito cuántico": "Secuencia de operaciones sobre qubits. Puede incluir puertas que preparan o transforman el estado y mediciones que producen resultados clásicos.",
+  "shots": "Número de ejecuciones de un circuito. En estos ejemplos, cada ejecución prepara de nuevo el qubit y lo mide una vez.",
+  "preparación": "Operaciones que establecen el estado del qubit antes de medirlo. Junto con la base de medición, ese estado determina las probabilidades de los resultados.",
+  "RX": "Puerta que rota el estado de un qubit según un ángulo. Desde el estado 0, RX de 120° da probabilidad 0,75 de medir 1 en el modelo ideal.",
+  "p-valor": "Probabilidad, suponiendo el modelo de referencia, de obtener un resultado tan extremo como el observado o más, según la prueba elegida. No es la probabilidad de que alguien sea culpable.",
+  "simulador": "Programa clásico que calcula o reproduce resultados de un modelo cuántico. Usarlo no significa ejecutar un experimento en hardware cuántico real."
+}

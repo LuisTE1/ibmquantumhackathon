@@ -1,4 +1,6 @@
-﻿# Prompts del motor (Persona 2) — para usar con Claude Code y Codex en la MISMA carpeta
+﻿> **ANTECEDENTE HISTÓRICO: especificación narrativa sustituida.** El equipo aprobó definitivamente El experimento fantasma: Sami añade la segunda H a las 21:14; Rumi retira el módulo a las 21:19; la acusación cruza auditoría y reconstrucción; final PHI/Φ. Este documento conserva el plan anterior: no es la especificación del caso actual ni evidencia de funciones implementadas. Consultar [MIGRACION-NARRATIVA.md](MIGRACION-NARRATIVA.md) y el README vigente.
+
+# Prompts del motor (Persona 2) — para usar con Claude Code y Codex en la MISMA carpeta
 
 Carpeta: C:\Users\luist\Desktop\proyecto_hackaton_IBM · Entorno: `C:\Users\luist\qiskit-env\Scripts\python.exe` (qiskit 2.6.1)
 Para dividir el trabajo sin pisarse: **Claude = `engine/circuits.py`**, **Codex = `tests/test_circuits.py` + `engine/find_seed.py`**. Ninguno toca `app.py`, `cases/` ni `docs/`.

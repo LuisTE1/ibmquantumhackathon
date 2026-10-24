@@ -1,14 +1,136 @@
 {
-  "title": "El experimento alterado",
-  "incident": {"config_changed_at": "14:05", "original_p": 0.5, "altered_p": 0.75, "altered_theta_deg": 120},
+  "schema_version": 2,
+  "title": "Quantum Files — Caso 01: El experimento fantasma",
+  "setting": "Qori Lab",
+  "detective": {
+    "id": "cuy",
+    "name": "Detective Cuy",
+    "species": "cuy"
+  },
+  "incident": {
+    "config_changed_at": "21:14",
+    "module_removed_at": "21:19",
+    "probability_outcome": "1",
+    "original_p": 0.5,
+    "altered_p": 0,
+    "alteration": {
+      "operation": "append_gate",
+      "gate": "H",
+      "actor": "sami"
+    },
+    "original_circuit": {
+      "initial_state": "0",
+      "gates": [
+        "H"
+      ],
+      "measurement_basis": "0/1",
+      "measurement_at": "end",
+      "model": "ideal",
+      "probabilities": {
+        "0": 0.5,
+        "1": 0.5
+      }
+    },
+    "altered_circuit": {
+      "initial_state": "0",
+      "gates": [
+        "H",
+        "H"
+      ],
+      "measurement_basis": "0/1",
+      "measurement_at": "end",
+      "model": "ideal",
+      "probabilities": {
+        "0": 1,
+        "1": 0
+      }
+    }
+  },
   "suspects": [
-    {"id": "lola", "name": "Lola Llama", "role": "Investigadora", "access": "14:05",
-     "statement": "Con una moneda 50/50, en 10 mediciones siempre salen 5 y 5.", "statement_true": false},
-    {"id": "tito", "name": "Tito Vicuña", "role": "Técnico", "access": "13:30",
-     "statement": "Con 7 unos en 10 no puedo concluir que haya alteración.", "statement_true": true},
-    {"id": "cora", "name": "Cora Cóndor", "role": "Analista", "access": "15:10",
-     "statement": "Con p = 0.75, en 100 mediciones espero cerca de 75 unos, aunque no exactamente 75.", "statement_true": true}
+    {
+      "id": "killa",
+      "name": "Killa",
+      "species": "vizcacha",
+      "role": "Testigo",
+      "access": null,
+      "statement": "La reconstrucción debe compararse con el circuito original.",
+      "statement_true": true
+    },
+    {
+      "id": "inti",
+      "name": "Inti",
+      "species": "cóndor",
+      "role": "Testigo",
+      "access": null,
+      "statement": "La edición del circuito está registrada a las 21:14.",
+      "statement_true": true
+    },
+    {
+      "id": "rumi",
+      "name": "Rumi",
+      "species": "zorro andino",
+      "role": "Sospechoso",
+      "access": null,
+      "statement": "Retiré el módulo a las 21:19, después de la edición del circuito.",
+      "statement_true": true
+    },
+    {
+      "id": "sami",
+      "name": "Sami",
+      "species": "alpaca",
+      "role": "Sospechosa",
+      "access": null,
+      "statement": "Añadir una segunda Hadamard cambia el resultado del circuito original.",
+      "statement_true": true
+    },
+    {
+      "id": "amaru",
+      "name": "Amaru",
+      "species": "puma",
+      "role": "Testigo",
+      "access": null,
+      "statement": "El archivo PHI lleva una firma Φ.",
+      "statement_true": true
+    }
   ],
-  "solution": {"culprit": "lola", "needs": ["false_statement", "present_at_change_time"]},
-  "hook": "Una firma con la letra Ψ aparece en la pantalla... el siguiente incidente ya empezó."
+  "timeline": [
+    {
+      "id": "circuit_edited",
+      "time": "21:14",
+      "actor": "sami",
+      "action": "Añade una segunda puerta H al circuito."
+    },
+    {
+      "id": "module_removed",
+      "time": "21:19",
+      "actor": "rumi",
+      "action": "Retira el módulo después de la alteración."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "audit_memory",
+      "kind": "audit",
+      "suspect_id": "sami",
+      "time": "21:14",
+      "title": "Memoria de auditoría",
+      "description": "El registro de edición vincula la incorporación de la segunda H a Sami a las 21:14."
+    },
+    {
+      "id": "circuit_reconstruction",
+      "kind": "experiment",
+      "title": "Reconstrucción del circuito",
+      "description": "Desde 0, H permite medir 0 o 1 con igual probabilidad. Con una segunda H y sin medir entre ambas, el circuito ideal vuelve a 0. La reconstrucción explica el cambio, pero por sí sola no identifica a quien editó."
+    }
+  ],
+  "solution": {
+    "culprit": "sami",
+    "needs": [
+      "audit_memory",
+      "circuit_reconstruction"
+    ],
+    "not_initiator": "rumi",
+    "explanation": "La reconstrucción explica cómo añadir una segunda H altera el experimento. La memoria de auditoría vincula esa edición de las 21:14 con Sami. Rumi retiró el módulo a las 21:19: su acción posterior no inició el sabotaje. Una declaración o un resultado aislado no bastan para atribuir la edición."
+  },
+  "hook": "Detective Cuy abre el archivo PHI. La firma Φ anuncia el siguiente episodio."
 }

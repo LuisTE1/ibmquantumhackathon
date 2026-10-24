@@ -1,4 +1,6 @@
-﻿Usa la skill `qiskit-fallfest-hackathon` y sigue su protocolo (lee `bases-y-evaluacion.md` y el tablero). Categoría: EdTech (IEEE CS PUCP). Entrega antes de las 14:45; tiempo total disponible: ~2 horas.
+﻿> **ANTECEDENTE HISTÓRICO: especificación narrativa sustituida.** El equipo aprobó definitivamente El experimento fantasma: Sami añade la segunda H a las 21:14; Rumi retira el módulo a las 21:19; la acusación cruza auditoría y reconstrucción; final PHI/Φ. Este documento conserva el plan anterior: no es la especificación del caso actual ni evidencia de funciones implementadas. Consultar [MIGRACION-NARRATIVA.md](MIGRACION-NARRATIVA.md) y el README vigente.
+
+Usa la skill `qiskit-fallfest-hackathon` y sigue su protocolo (lee `bases-y-evaluacion.md` y el tablero). Categoría: EdTech (IEEE CS PUCP). Entrega antes de las 14:45; tiempo total disponible: ~2 horas.
 
 # Proyecto: "Quantum Files — El patrón invisible" (mascota: Inspector Cuy, un cuy detective)
 Juego de detectives por episodios, en Python + Streamlit, que enseña probabilidad (Bernoulli y muestreo) y su equivalente cuántico (medición de un qubit) con Qiskit 2.x. Público: desde 14 años, sin saber cuántica. Una partida dura 5–8 minutos. Aprender y avanzar en el caso son lo mismo: cada pregunta ayuda a resolverlo.
