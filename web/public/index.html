@@ -14,18 +14,25 @@
 <body>
   <header class="hud">
     <div class="obj-banner" role="status" aria-live="polite"><span>🎯</span><b id="objective"></b></div>
-    <div class="hud-btns">
+    <div class="hud-row">
+      <span id="rank" class="rank" title="Tu rango y puntos de experiencia"></span>
       <span id="roomname" class="room"></span>
-      <button id="btn-book" class="ib" aria-label="Libreta de evidencias">📓 <span id="evcount">0</span></button>
-      <button id="btn-reset" class="ib" aria-label="Reiniciar caso">⟲</button>
+      <div class="hud-btns">
+        <button id="btn-hint" class="ib" aria-label="Pista">💡</button>
+        <button id="btn-chal" class="ib" aria-label="Desafíos">🧪</button>
+        <button id="btn-book" class="ib" aria-label="Libreta de evidencias">📓 <span id="evcount">0</span></button>
+        <button id="btn-snd" class="ib" aria-label="Sonido">🔊</button>
+        <button id="btn-reset" class="ib" aria-label="Reiniciar caso">⟲</button>
+      </div>
     </div>
+    <div class="prog" aria-hidden="true"><i id="progbar"></i></div>
   </header>
 
   <main class="wrap">
     <div id="stage" class="stage" aria-label="Escenario del laboratorio">
       <div id="player" class="player"><img id="pimg" src="img/cuy_idle.png" alt="Detective Cuy" draggable="false"><span class="shadow"></span></div>
     </div>
-    <p class="help">WASD / flechas para moverte · E o toca para interactuar · 📓 libreta de evidencias</p>
+    <p class="help">WASD / flechas para moverte · E o clic para interactuar · sigue la flecha ▼ amarilla · 💡 si te pierdes</p>
   </main>
 
   <div class="controls" aria-label="Controles táctiles">

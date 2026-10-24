@@ -1,5 +1,5 @@
-/* Service worker: la app funciona sin conexión (el juego usa el simulador local si falla /api/run). */
-const CACHE = "qf-v2";
+/* Service worker: red primero (siempre la versión nueva) y copia local si no hay conexión. */
+const CACHE = "qf-v3";
 const SHELL = ["./", "index.html", "styles.css", "js/sim.js", "js/game.js", "manifest.webmanifest",
   "img/cuy_idle.png", "img/cuy_run.png", "img/llama.png", "img/andes.jpg", "icons/icon-192.png", "icons/icon-512.png"];
 self.addEventListener("install", (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting())); });
@@ -7,8 +7,6 @@ self.addEventListener("activate", (e) => { e.waitUntil(caches.keys().then((ks) =
 self.addEventListener("fetch", (e) => {
   const u = new URL(e.request.url);
   if (e.request.method !== "GET" || u.origin !== location.origin || u.pathname.startsWith("/api/")) return; // la API siempre va a la red
-  e.respondWith(caches.match(e.request).then((hit) => {
-    const net = fetch(e.request).then((r) => { if (r.ok) { const copy = r.clone(); caches.open(CACHE).then((c) => c.put(e.request, copy)); } return r; }).catch(() => hit);
-    return hit || net;
-  }));
+  e.respondWith(fetch(e.request).then((r) => { if (r.ok) { const copy = r.clone(); caches.open(CACHE).then((c) => c.put(e.request, copy)); } return r; })
+    .catch(() => caches.match(e.request).then((hit) => hit || caches.match("index.html"))));
 });
