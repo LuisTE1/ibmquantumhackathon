@@ -63,7 +63,7 @@
   const GCOL = { h: "#4da3ff", x: "#ff7a7a", "?": "none" };
   function circuit(gates, o = {}) {
     const gw = 54, x0 = 92, n = gates.length + (o.measure === false ? 0 : 1), W = x0 + n * gw + 24, y = 38;
-    let s = `<svg class="circ" viewBox="0 0 ${W} 76" role="img" aria-label="Circuito cuántico: ${gates.map((g) => g.toUpperCase()).join(', ') || 'sin compuertas'}">`;
+    let s = `<svg class="circ" style="max-width:${Math.round(W * 1.55)}px" viewBox="0 0 ${W} 76" role="img" aria-label="Circuito cuántico: ${gates.map((g) => g.toUpperCase()).join(', ') || 'sin compuertas'}">`;
     s += `<text x="6" y="${y + 5}" fill="#f5e9d0" font-size="15">q₀:</text><text x="38" y="${y + 6}" fill="#ffd24a" font-size="17" font-weight="800">${KET[o.start || "0"]}</text>`;
     s += `<line x1="84" y1="${y}" x2="${W - 8}" y2="${y}" stroke="#f5e9d0" stroke-width="2"/>`;
     gates.forEach((g, i) => {

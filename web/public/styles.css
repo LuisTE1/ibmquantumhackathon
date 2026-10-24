@@ -178,3 +178,6 @@ img{max-width:100%}
 .r-control::before{filter:hue-rotate(150deg) saturate(1.3) brightness(.85)}
 .r-taller::before{filter:sepia(.85) saturate(1.4) brightness(.8)}
 @media(prefers-reduced-motion:reduce){.roam,.boss img,.obj.quilla .em,.stage.alarm{animation:none}}
+
+.side{padding:6px}.sidea svg{max-width:100px;height:auto}.sideb .circ{max-width:300px}
+.bugs{margin-bottom:64px}
