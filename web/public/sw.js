@@ -1,5 +1,5 @@
 /* Service worker: red primero (siempre la versión nueva) y copia local si no hay conexión. */
-const CACHE = "qf-v5";
+const CACHE = "qf-v8";
 const SHELL = ["./", "index.html", "styles.css", "js/sim.js", "js/game.js", "manifest.webmanifest",
   "img/cuy_idle.png", "img/bug0.png", "img/bug1.png", "img/boss.png", "img/cuy_run.png", "img/llama.png", "img/andes.jpg", "icons/icon-192.png", "icons/icon-512.png"];
 self.addEventListener("install", (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting())); });

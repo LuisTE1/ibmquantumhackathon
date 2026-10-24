@@ -32,18 +32,23 @@
     <div id="stage" class="stage" aria-label="Escenario del laboratorio">
       <div id="player" class="player"><img id="pimg" src="img/cuy_idle.png" alt="Detective Cuy" draggable="false"><span class="shadow"></span></div>
     </div>
-    <p class="help">WASD / flechas para moverte · E o clic para interactuar · sigue la flecha ▼ amarilla · 💡 si te pierdes</p>
+    <div class="controls" aria-label="Controles táctiles">
+      <div class="dpad">
+        <button data-dir="u" aria-label="Arriba">▲</button>
+        <button data-dir="l" aria-label="Izquierda">◀</button>
+        <button data-dir="d" aria-label="Abajo">▼</button>
+        <button data-dir="r" aria-label="Derecha">▶</button>
+      </div>
+      <div class="rightc"><div class="atkrow"><button id="btn-ax" class="atk" aria-label="Disparar X">⚡ X</button><button id="btn-ah" class="atk" aria-label="Disparar H">🌀 H</button></div><button id="btn-act" class="act" aria-label="Interactuar">E · Interactuar</button></div>
+    </div>
+    <aside id="side" class="sidepanel" aria-live="polite">
+      <div class="coach"><img src="img/cuy_idle.png" alt="Profe Cuy"><div class="bub" id="sc-bub"></div></div>
+      <div id="sc-art"></div>
+      <div class="atkrow2"><button id="btn-ax2" class="atk" aria-label="Disparar X">⚡ X</button><button id="btn-ah2" class="atk" aria-label="Disparar H">🌀 H</button></div>
+    </aside>
+    <p class="help">WASD / flechas para moverte · E o clic para interactuar · clic en un glitch 🐛 y pulsa X o H para dispararle · sigue la flecha ▼ · 💡 si te pierdes</p>
   </main>
 
-  <div class="controls" aria-label="Controles táctiles">
-    <div class="dpad">
-      <button data-dir="u" aria-label="Arriba">▲</button>
-      <button data-dir="l" aria-label="Izquierda">◀</button>
-      <button data-dir="d" aria-label="Abajo">▼</button>
-      <button data-dir="r" aria-label="Derecha">▶</button>
-    </div>
-    <button id="btn-act" class="act" aria-label="Interactuar">E · Interactuar</button>
-  </div>
 
   <section id="dialog" class="dialog" hidden role="dialog" aria-live="polite">
     <div id="d-av" class="av"></div>

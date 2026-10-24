@@ -90,6 +90,12 @@
   const qcode = (gates, start = "0", measure = true) => ["from qiskit import QuantumCircuit", "qc = QuantumCircuit(1, 1)"].concat(start === "1" ? ["qc.x(0)   # empezar en |1⟩"] : [])
     .concat(gates.map((g) => `qc.${g}(0)` + (g === "h" ? "   # mezcla 0 y 1" : "   # voltea 0↔1"))).concat(measure ? ["qc.measure(0, 0)   # mirar la monedita"] : []).join("\n");
   const codeBox = (gates, start, measure) => `<details class="code"><summary>👩‍💻 Así lo escribe Qiskit</summary><pre>${qcode(gates, start, measure)}</pre></details>`;
+  const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const coinFor = (v, flip) => { const k = Math.abs(v[0]) > 0.999 ? "0" : Math.abs(v[1]) > 0.999 ? "1" : "?"; return `<span class="cn big ${k === "1" ? "c1" : k === "0" ? "c0" : "cq"} ${flip ? "flip" : ""}" title="${k === "?" ? "girando: 50/50" : "moneda en " + k}">${k}</span>`; };
+  const coinsRow = (c) => `<div class="coinrow">${shuffle([...Array(c["0"]).fill("0"), ...Array(c["1"]).fill("1")]).map((v) => `<span class="cn cq" data-v="${v}">?</span>`).join("")}</div>`;
+  function revealCoins(root) { // las monedas giran (superposición) y luego se voltean al resultado medido
+    root.querySelectorAll(".cn[data-v]").forEach((c, i) => setTimeout(() => { c.classList.remove("cq"); c.classList.add("flip", c.dataset.v === "1" ? "c1" : "c0"); setTimeout(() => { c.textContent = c.dataset.v; }, 330); if (i % 3 === 0) sfx.hit(); }, 250 + i * 110));
+  }
   const coach = (html, kind = "") => `<div class="coach ${kind}"><img src="img/cuy_idle.png" alt="Profe Cuy"><div class="bub">${html}</div></div>`;
   const good = (html) => coach("✅ " + html, "good");
   const bad = (why, tip) => coach(`🙈 Oye, <b>no es así</b>: ${why}<br>💡 <b>Te recomiendo</b> ${tip}`, "bad");
@@ -186,11 +192,11 @@
   }
   const withLesson = (key, title, slides, start) => (S.seen[key] ? start() : lesson(key, title, slides, start));
   function sandbox(box) { // demo interactiva: aplica X o H y mira cómo se mueve la flecha
-    let v = START["1"].slice(), hist = [];
+    let v = START["1"].slice(), hist = [], fl = false;
     const draw = () => {
-      box.innerHTML = `<div class="sbx"><div>${bloch(v, 120)}<small>${stateText(v)}</small></div><div class="sbr">${circuit(hist, { start: "1", measure: false })}<div class="row"><button class="btn" data-g="x">⚡ X</button><button class="btn" data-g="h">🌀 H</button><button class="btn" data-r="1">↺ Reiniciar</button></div></div></div>`;
-      box.querySelectorAll("[data-g]").forEach((b) => b.onclick = () => { v = applyG(b.dataset.g, v); hist.push(b.dataset.g); sfx.hit(); if (hist.length > 5) hist.shift(); draw(); });
-      box.querySelector("[data-r]").onclick = () => { v = START["1"].slice(); hist = []; draw(); };
+      box.innerHTML = `<div class="sbx"><div>${bloch(v, 120)}<div class="coinbig">${coinFor(v, fl)}</div><small>${stateText(v)}</small></div><div class="sbr">${circuit(hist, { start: "1", measure: false })}<div class="row"><button class="btn" data-g="x">⚡ X</button><button class="btn" data-g="h">🌀 H</button><button class="btn" data-r="1">↺ Reiniciar</button></div></div></div>`;
+      box.querySelectorAll("[data-g]").forEach((b) => b.onclick = () => { v = applyG(b.dataset.g, v); hist.push(b.dataset.g); fl = true; sfx.hit(); if (hist.length > 5) hist.shift(); draw(); });
+      box.querySelector("[data-r]").onclick = () => { v = START["1"].slice(); hist = []; fl = false; draw(); };
     };
     draw();
   }
@@ -202,7 +208,6 @@
     $("#evcount").textContent = S.evid.length; $("#btn-snd").textContent = S.mute ? "🔇" : "🔊";
     $("#btn-chal").classList.toggle("locked", S.stage < 5);
   }
-  const bugRoom = () => ({ central: S.stage <= 1 && !S.waves[1] || S.stage === 6 && !S.waves[4], control: S.stage === 2 && !S.waves[2], taller: S.stage === 4 && !S.waves[3] });
   function render() {
     const room = ROOMS[S.room], g = GOAL[Math.min(S.stage, 7)];
     stage.className = "stage " + room.cls;
@@ -210,7 +215,7 @@
     let obj = OBJECTIVE[Math.min(S.stage, 7)], goalId = null;
     if (g) { goalId = g[0] === S.room ? g[1] : doorToward(S.room, g[0]); if (g[0] !== S.room) obj += " → " + ROOMS[g[0]].name; }
     $("#objective").textContent = obj;
-    stage.querySelectorAll(".obj,.roam").forEach((n) => n.remove());
+    stage.querySelectorAll(".obj,.foe").forEach((n) => n.remove());
     objEls = {};
     room.objs.forEach((o) => {
       const art = o.e.startsWith("img:") ? `<img src="${o.e.slice(4)}" alt="" draggable="false">` : `<span class="em">${o.e}</span>`;
@@ -219,8 +224,8 @@
       n.addEventListener("click", (ev) => { ev.stopPropagation(); goTo(o); });
       stage.appendChild(n); objEls[o.id] = n;
     });
-    if (bugRoom()[S.room]) for (let i = 0; i < 3; i++) { const b = el("img", "roam r" + i); b.src = "img/bug" + (i % 2) + ".png"; b.alt = ""; stage.appendChild(b); }
-    placePlayer(); hud(); fit();
+    if (foes.length && foes.room === S.room) foes.forEach((f) => { if (!f.dead) attachFoe(f); }); else if (foes.length) foes = [];
+    placePlayer(); hud(); fit(); ensureWave(); if (!foes.length) panelIdle();
   }
   function placePlayer() { playerEl.style.left = S.px + "%"; playerEl.style.top = S.py + "%"; }
   const objOf = (id) => Object.values(ROOMS).flatMap((r) => r.objs).find((o) => o.id === id);
@@ -243,14 +248,8 @@
     },
     inti() {
       if (S.stage === 0) {
-        say([["inti", "Detective Cuy, gracias por venir. Soy Inti, director de Qori Lab."],
-          ["inti", "Esta es QUILLA 🌀: una máquina que trabaja con qubits. Imagina un qubit como una monedita especial: al mirarla —medirla— sale 0 o 1."],
-          ["cuy", "¿Y qué pasó anoche, Inti?"],
-          ["inti", "Alguien cambió el circuito de QUILLA y desapareció el módulo de calibración. Ahora sus resultados salen raros."],
-          ["inti", "Mira este registro: de 10 mediciones, 7 dieron 1 y 3 dieron 0. Yo creo que eso prueba un sabotaje."],
-          ["killa", "Eso habría que comprobarlo, Inti. Una sola muestra pequeña puede engañar."],
-          ["inti", "Por eso necesito que averigües TRES cosas: ¿qué cambiaron?, ¿quién lo hizo? y ¿dónde está el módulo?"],
-          ["killa", "Yo seré tu Profe: te enseñaré a leer los circuitos paso a paso. ¡Vamos a QUILLA 🌀!"]], () => { addEvid("reg73"); setStage(1); });
+        say([["inti", "QUILLA es una máquina de qubits: monedas especiales que, al mirarlas, dan 0 o 1."], ["inti", "Anoche cambiaron su circuito y falta un módulo. ¡Averigua qué, quién y dónde!"],
+          ["inti", "Mira: 7 unos y 3 ceros. Yo creo que es sabotaje."], ["killa", "Eso hay que comprobarlo. ¡A QUILLA 🌀! Antes limpia los glitches con ⚡X y 🌀H."]], () => { addEvid("reg73"); setStage(1); });
       } else say([["inti", S.stage >= 2 ? "Recuerda: el diseño aprobado era |0⟩ → H → medir. Eso debe dar 50/50." : "Usa la copia de prueba en QUILLA y dime si hay sabotaje."]]);
     },
     amaru() {
@@ -289,6 +288,7 @@
       { say: "¡Bichos! Cada glitch es un <b>qubit</b>: una monedita especial. <b>Cara = 0</b> y <b>sello = 1</b>. Para eliminarlo hay que dejarlo en <b>0</b>.", art: `<div class="coins"><span>🪙<small>0 (cara)</small></span><span>🪙<small>1 (sello)</small></span></div>` },
       { say: "Para ver en qué estado está, miramos esta <b>flecha</b>: si apunta <b>arriba</b> es 0, si apunta <b>abajo</b> es 1, y si apunta a un <b>lado</b> es 50/50 (mitad y mitad).", art: bloch(START["0"], 120) + bloch(START["1"], 120) + bloch(START["+"], 120) },
       { say: "Tienes 2 herramientas. <b>⚡X</b> le da la vuelta a la moneda: de 1 pasa a 0. <b>🌀H</b> la mezcla: de 0 pasa a 50/50 y de 50/50 vuelve a 0. ¡Pruébalas tú!", art: "", demo: true },
+      { say: "¡A jugar! <b>Corre</b> (WASD o la cruceta) hacia un bicho 🐛. Cuando estés cerca se ilumina: pulsa la tecla <b>X</b> (⚡) o la tecla <b>H</b> (🌀). Mira el <b>panel del Profe Cuy</b>: ahí ves su circuito.", art: `<div class="coins"><span>🏃<small>correr</small></span><span>⚡<small>tecla X</small></span><span>🌀<small>tecla H</small></span></div>` },
     ]],
     glitch3: ["Glitches difíciles", [
       { say: "Cuidado: |+⟩ y |−⟩ <b>parecen iguales</b> (los dos son 50/50) pero la flecha apunta a lados <b>distintos</b>. Con H: |+⟩ va a 0 y |−⟩ va a 1.", art: bloch(START["+"], 110) + bloch(START["-"], 110) },
@@ -314,54 +314,77 @@
     ]],
   };
 
-  // ------------------------------------------------------------------ glitches
+  // ------------------------------------------------------------------ glitches: enemigos en la sala (corre, acércate y dispara X o H)
   const WAVES = { 1: ["1", "1", "+"], 2: ["+", "1", "1", "+"], 3: ["-", "1", "+"], 4: ["-", "-", "1", "+"] };
   const MINM = { "1": 1, "+": 1, "-": 2 };
-  function glitchWave(w, done) {
-    if (S.waves[w]) return done();
-    const key = w === 3 ? "glitch3" : "glitch1";
-    withLesson(key, L[key][0], L[key][1], () => arena(w, done));
+  const WAVE_AT = { 1: 1, 2: 2, 4: 3, 6: 4 }, WAVE_ROOM = { 1: "central", 2: "control", 3: "taller", 4: "central" };
+  const DEVICE = { 1: "QUILLA 🌀", 2: "la consola 🖥️", 3: "la caja 📦", 4: "QUILLA 🌀" };
+  let foes = [], curTgt = null, lessonOn = false, fightMoves = 0, fightMin = 0;
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+  const kindOf = (v) => (Math.abs(v[1]) > 0.999 ? "1" : Math.abs(v[0]) > 0.999 ? "0" : v[0] * v[1] > 0 ? "+" : "-");
+  function attachFoe(f) {
+    const n = el("div", "foe" + (f.boss ? " boss" : ""), `<img src="img/${f.boss ? "boss" : "bug" + (f.id % 2)}.png" alt="glitch" draggable="false"><div class="fst"></div>`);
+    n.style.left = f.x + "%"; n.style.top = f.y + "%"; f.el = n; stage.appendChild(n);
+    n.addEventListener("click", (ev) => { ev.stopPropagation(); if (busy) return; focus = f; sfx.hit(); foes.forEach(paintFoe); panel("Glitch elegido ✔. Pulsa <b>X</b> o <b>H</b> para dispararle (tu cuy irá hasta él).", f); });
+    paintFoe(f);
   }
-  function arena(w, done) {
-    const bugs = WAVES[w].map((k, i) => ({ id: i, k, v: START[k].slice(), dead: false, hist: [] })), minTotal = WAVES[w].reduce((n, k) => n + MINM[k], 0);
-    let sel = 0, moves = 0, msg = "Toca un bicho y elige ⚡X o 🌀H. Déjalo en 0 (flecha arriba).";
-    const alive = () => bugs.filter((b) => !b.dead);
-    const draw = () => {
-      const cur = bugs[sel] && !bugs[sel].dead ? bugs[sel] : alive()[0]; if (cur) sel = cur.id;
-      openModal(`<h2>🐛 ¡Glitches! ${w === 4 ? "· Jefe Φ" : ""}</h2>${w === 4 ? `<div class="boss"><img src="img/boss.png" alt="Jefe"></div>` : ""}
-        <div class="side"><div class="sidea">${bloch(cur.v, 124)}<small>${stateText(cur.v)}</small></div><div class="sideb">${circuit(cur.hist, { start: cur.k, measure: false })}<pre class="mini-code">${qcode(cur.hist, cur.k === "1" ? "1" : "0", false).split("\n").slice(1).join("\n")}</pre></div></div>
-        ${coach(msg)}
-        <div class="bugs">${bugs.map((b) => b.dead ? `<div class="bug dead">💥</div>` : `<button class="bug ${sel === b.id ? "sel" : ""}" data-b="${b.id}" data-k="${b.k}"><img class="bimg" src="img/bug${b.id % 2}.png" alt="glitch">${bloch(b.v, 54, { labels: false })}<b>${stateText(b.v)}</b></button>`).join("")}</div>
-        <div class="tools"><button class="tool" data-g="x">⚡ X</button><button class="tool" data-g="h">🌀 H</button></div><p class="small">Movimientos: ${moves} · glitches vivos: ${alive().length}</p>
-        <button class="btn" id="helpL">🎓 Ver la lección</button>`);
-      mbody.querySelectorAll("[data-b]").forEach((n) => n.onclick = () => { sel = +n.dataset.b; sfx.hit(); msg = "Ese es tu objetivo. ¿X o H?"; draw(); });
-      mbody.querySelectorAll("[data-g]").forEach((n) => n.onclick = () => move(n.dataset.g, cur));
-      $("#helpL").onclick = () => lesson(w === 3 ? "glitch3" : "glitch1", L[w === 3 ? "glitch3" : "glitch1"][0], L[w === 3 ? "glitch3" : "glitch1"][1], () => arena(w, done));
-    };
-    const move = (g, b) => {
-      const before = stateText(b.v), prevK = Math.abs(b.v[1]) > 0.999 ? "1" : Math.abs(b.v[0]) > 0.999 ? "0" : b.v[0] * b.v[1] > 0 ? "+" : "-";
-      b.v = applyG(g, b.v); b.hist.push(g); moves++;
-      if (Math.abs(b.v[0]) > 0.999) {
-        b.dead = true; S.kills++; sfx.kill(); award(3);
-        msg = g === "x" ? "¡Eliminado! X le dio la vuelta: de 1 pasó a 0." : "¡Eliminado! H lo mezcló de nuevo y lo dejó en 0.";
-        if (!alive().length) return won();
-      } else {
-        sfx.hit();
-        if (g === "x" && prevK === "+") msg = "Oye, X no mueve a un bicho |+⟩: está justo en el eje de giro. 💡 Te recomiendo usar H, que lo manda arriba (0).";
-        else if (g === "x" && prevK === "-") msg = "X no cambia a |−⟩ (sigue 50/50 del mismo lado). 💡 Te recomiendo H: lo manda abajo (1) y luego X lo sube.";
-        else if (g === "h" && prevK === "1") msg = "H lo mezcló: ahora está 50/50 (flecha a la izquierda). 💡 Para un 1 era mejor X, que le da la vuelta directo. Prueba H otra vez para volver.";
-        else if (g === "h" && prevK === "-") msg = "Bien: H lo mandó abajo (1). Ahora aplica ⚡X para subirlo a 0.";
-        else msg = `Pasó de ${before} a ${stateText(b.v)}. Mira dónde apunta la flecha: necesitamos que apunte arriba.`;
-      }
-      draw();
-    };
-    const won = () => {
-      S.waves[w] = true; save(); burst(); sfx.ok();
-      const perfect = moves <= minTotal; if (perfect) { award(5); badge("cazador"); }
-      openModal(`<h2>🎉 ¡Glitches eliminados!</h2>${good(perfect ? "¡Perfecto! Usaste el <b>mínimo de movimientos</b>." : `Lo lograste en ${moves} movimientos (el mínimo era ${minTotal}).`)}<button class="btn big" id="gw">Continuar ➜</button>`);
-      $("#gw").onclick = () => { closeModal(); done(); };
-    };
-    draw();
+  function paintFoe(f) { if (!f.el) return; f.el.querySelector(".fst").innerHTML = bloch(f.v, 40, { labels: false }) + `<b>${stateText(f.v)}</b>`; f.el.classList.toggle("tgt", curTgt === f || focus === f); }
+  function ensureWave() {
+    const w = WAVE_AT[S.stage];
+    if (!w || S.waves[w] || S.room !== WAVE_ROOM[w] || foes.length || lessonOn || busy) return;
+    const key = w === 3 ? "glitch3" : "glitch1", go = () => spawn(w);
+    if (!S.seen[key]) { lessonOn = true; lesson(key, L[key][0], L[key][1], () => { lessonOn = false; go(); }); } else go();
+  }
+  function spawn(w) {
+    foes = WAVES[w].map((k, i) => ({ id: i, k, v: START[k].slice(), hist: [], dead: false, boss: w === 4 && i === 0,
+      x: 20 + Math.random() * 60, y: 30 + Math.random() * 55, vx: (Math.random() - 0.5) * 10, vy: (Math.random() - 0.5) * 10, t: 0 }));
+    foes.room = S.room; foes.wave = w; fightMoves = 0; fightMin = WAVES[w].reduce((n, k) => n + MINM[k], 0); curTgt = null;
+    foes.forEach(attachFoe); document.body.classList.add("fight");
+    panel(`¡Glitches! 🐛 Corre hacia uno y pulsa <b>⚡X</b> o <b>🌀H</b> (teclas <b>X</b> y <b>H</b>). Déjalo en <b>0</b> (flecha arriba).`);
+  }
+  function nearestFoe(max = 26) { let best = null, bd = max; foes.forEach((f) => { if (f.dead) return; const d = dist(S.px, S.py, f.x, f.y); if (d < bd) { bd = d; best = f; } }); return best; }
+  let focus = null, pending = null;
+  function anyFoe() { let best = null, bd = 1e9; foes.forEach((f) => { if (f.dead) return; const d = dist(S.px, S.py, f.x, f.y); if (d < bd) { bd = d; best = f; } }); return best; }
+  function attack(g) {
+    if (!foes.length || !modal.hidden) return;
+    const f = focus && !focus.dead ? focus : nearestFoe(34) || anyFoe();
+    if (!f) return;
+    if (dist(S.px, S.py, f.x, f.y) > 34) { pending = { g, f }; target = { x: f.x, y: Math.min(f.y + 5, 92) }; autoId = null; toast("🏃 Voy hacia el glitch…"); return; }
+    pending = null; fire(g, f);
+  }
+  function fire(g, f) {
+    const prev = kindOf(f.v), before = stateText(f.v);
+    f.v = applyG(g, f.v); f.hist.push(g); fightMoves++;
+    const tag = el("div", "pop", g.toUpperCase()); tag.style.left = f.x + "%"; tag.style.top = f.y + "%"; stage.appendChild(tag); setTimeout(() => tag.remove(), 700);
+    if (Math.abs(f.v[0]) > 0.999) {
+      f.dead = true; if (focus === f) focus = null; S.kills++; sfx.kill(); award(3); if (f.el) { f.el.classList.add("dying"); const e0 = f.el; setTimeout(() => e0.remove(), 450); }
+      if (foes.every((x) => x.dead)) return waveWon(foes.wave);
+      curTgt = null; return panel(g === "x" ? "¡Eliminado! ⚡X le dio la vuelta: de <b>1</b> pasó a <b>0</b>." : "¡Eliminado! 🌀H lo mezcló de nuevo y lo dejó en <b>0</b>.", null);
+    }
+    sfx.hit(); paintFoe(f);
+    let m = `Pasó de ${before} a ${stateText(f.v)}. Mira dónde apunta la flecha: necesitamos que apunte arriba.`;
+    if (g === "x" && prev === "+") m = "Oye, <b>X no mueve a un |+⟩</b>: está justo en el eje de giro. 💡 Te recomiendo <b>H</b>, que lo manda arriba (0).";
+    else if (g === "x" && prev === "-") m = "<b>X no cambia a |−⟩</b> (sigue 50/50). 💡 Te recomiendo <b>H</b>: lo manda abajo (1) y luego X lo sube.";
+    else if (g === "h" && prev === "1") m = "<b>H lo mezcló</b>: ahora está 50/50. 💡 Para un 1 era mejor <b>X</b>, que le da la vuelta directo. Dispara H otra vez para volver.";
+    else if (g === "h" && prev === "-") m = "¡Bien! H lo mandó abajo (1). Ahora dispara <b>⚡X</b> para subirlo a 0.";
+    panel(m, f);
+  }
+  function waveWon(w) {
+    S.waves[w] = true; save(); foes = []; curTgt = null; focus = null; pending = null; document.body.classList.remove("fight"); burst(); sfx.ok();
+    const perfect = fightMoves <= fightMin; if (perfect) { award(5); badge("cazador"); }
+    toast("🎉 ¡Glitches eliminados!");
+    panel((perfect ? "⭐ ¡Perfecto, mínimo de movimientos! " : `Lo lograste en ${fightMoves} movimientos (mínimo ${fightMin}). `) + `Ahora ve a <b>${DEVICE[w]}</b>.`);
+    render();
+  }
+  function glitchWave(w, done) { if (S.waves[w]) return done(); toast("🔒 ¡Hay glitches! Elimínalos primero"); panel("🔒 Esto está protegido por <b>glitches</b>. Corre hacia ellos y dispárales con <b>⚡X</b> o <b>🌀H</b>."); ensureWave(); }
+  // panel lateral del Profe Cuy (fuera del escenario)
+  function panel(msg, f) {
+    $("#sc-bub").innerHTML = msg;
+    $("#sc-art").innerHTML = f ? `<div class="side"><div class="sidea">${bloch(f.v, 112)}<div class="coinbig">${coinFor(f.v, false)}</div><small>${stateText(f.v)}</small></div><div class="sideb">${circuit(f.hist, { start: f.k, measure: false })}<pre class="mini-code">${qcode(f.hist, f.k === "1" ? "1" : "0", false).split("\n").slice(1).join("\n")}</pre></div></div>` : "";
+  }
+  function panelIdle() {
+    const t = ["Habla con Inti 🦅. ¡Sigue la flecha ▼!", "Ve a QUILLA 🌀.", "Ve a la consola 🖥️ en la sala de Control.", "Habla con Rumi 🦊 en el Taller.", "Abre la caja 📦.", "Habla con Sami 🦙.", "Repara QUILLA 🌀.", "¡Listo! Prueba los desafíos 🧪."];
+    panel("🎓 <b>Profe Cuy:</b> " + t[Math.min(S.stage, 7)]);
   }
 
   // ------------------------------------------------------------------ puzles
@@ -375,7 +398,7 @@
     $("#helpL").onclick = () => lesson("sample", L.sample[0], L.sample[1], runSample);
     $("#p1run").onclick = async () => {
       const r = await runCircuit(["h"], 10); hist.push(`${r.counts["1"]}/${r.counts["0"]}`); S.runs++;
-      $("#p1out").innerHTML = bars(r.counts, 10) + badgeSrc(r); $("#p1hist").innerHTML = "Unos/ceros: " + hist.join(" · ") + (hist.length < 3 ? ` <i>(${3 - hist.length} más)</i>` : "");
+      $("#p1out").innerHTML = coinsRow(r.counts) + bars(r.counts, 10) + badgeSrc(r); revealCoins($("#p1out")); $("#p1hist").innerHTML = "Unos/ceros: " + hist.join(" · ") + (hist.length < 3 ? ` <i>(${3 - hist.length} más)</i>` : "");
       if (hist.length >= 3 && !$("#p1q").innerHTML) {
         $("#p1q").innerHTML = `<div class="q"><p><b>Inti dice: «7 unos y 3 ceros prueban un sabotaje». ¿Tiene razón?</b></p>
           <label><input type="radio" name="a" value="si"> Sí, 7 de 10 es mucho</label><label><input type="radio" name="a" value="no"> No, pudo ser azar</label>
@@ -437,7 +460,8 @@
         const op = $("#d" + inp).value, gates = (inp === 1 ? ["x"] : []).concat(op === "x" ? ["x"] : []), want = inp === 0 ? "1" : "0", r = await runCircuit(gates, 10);
         const pass = r.probs[want] === 1; ok = ok && pass;
         if (!pass) why.push(inp === 0 ? "la entrada <b>0</b> debía salir <b>1</b> y sin X se queda en 0" : "la entrada <b>1</b> debía salir <b>0</b>, pero con el circuito elegido sigue en 1");
-        html += `<div class="res">${pass ? "✅" : "❌"} Entrada ${inp}${inp === 1 ? " (empieza en 1)" : ""}: ${circuit(gates, { start: inp === 1 ? "1" : "0" })} salió ${r.counts["1"] === 10 ? "1" : r.counts["0"] === 10 ? "0" : "mezcla"} (debía ${want}) ${badgeSrc(r)}</div>`;
+        const outV = r.counts["1"] === 10 ? "1" : r.counts["0"] === 10 ? "0" : "?";
+        html += `<div class="res">${pass ? "✅" : "❌"} Entrada <span class="cn c${inp}">${inp}</span> ${circuit(gates, { start: inp === 1 ? "1" : "0" })} ➜ <span class="cn flip ${outV === "1" ? "c1" : outV === "0" ? "c0" : "cq"}">${outV}</span> (debía salir ${want}) ${badgeSrc(r)}</div>`;
       }
       $("#dout").innerHTML = html;
       if (ok) {
@@ -498,10 +522,10 @@
       mbody.querySelectorAll("[data-c]").forEach((b) => b.onclick = () => { chips[+b.dataset.c].on = !chips[+b.dataset.c].on; draw(); });
       $("#rrun").onclick = async () => {
         const ok = gates.length === 1, r = await runCircuit(gates, 10);
-        $("#rout").innerHTML = bars(r.counts, 10) + badgeSrc(r) + (ok ? good("¡Diseño restaurado: |0⟩ → H → medir!") + `<button class="btn big" id="rend">Reactivar QUILLA ➜</button>`
+        $("#rout").innerHTML = coinsRow(r.counts) + bars(r.counts, 10) + badgeSrc(r) + (ok ? good("¡Diseño restaurado: |0⟩ → H → medir!") + `<button class="btn big" id="rend">Reactivar QUILLA ➜</button>`
           : gates.length === 0 ? bad("sin ninguna H el qubit queda siempre en 0: no es el diseño.", "dejar <b>exactamente una H</b> para que vuelva el 50/50.")
           : bad("con <b>dos H</b> seguidas se cancelan y todo sale 0 (justo el sabotaje).", "quitar una de las dos H para dejar el diseño aprobado."));
-        if (ok) { sfx.ok(); $("#rend").onclick = () => { closeModal(); setStage(7); award(10); if (!S.hints) badge("sinpistas"); burst(); ending(); }; } else { sfx.bad(); shake($("#rout")); }
+        revealCoins($("#rout")); if (ok) { sfx.ok(); $("#rend").onclick = () => { closeModal(); setStage(7); award(10); if (!S.hints) badge("sinpistas"); burst(); ending(); }; } else { sfx.bad(); shake($("#rout")); }
       };
     };
     draw();
@@ -524,8 +548,8 @@
         $("#cgo").disabled = true;
         const r = await runCircuit(g, 20), ok = v === ans, label = { "0": "siempre 0", "1": "siempre 1", mix: "50 / 50" }[ans];
         if (ok) { streak++; sfx.ok(); award(5); if (streak > S.best) { S.best = streak; save(); } if (streak === 5) badge("racha"); } else { streak = 0; sfx.bad(); shake($("#cfb")); }
-        $("#cfb").innerHTML = (ok ? good(`¡Correcto! Era <b>${label}</b>.`) : bad(`el resultado era <b>${label}</b>.`, "seguir la flecha paso a paso (abajo): en cada compuerta se mueve.")) + traceRow(g) + bars(r.counts, 20) + badgeSrc(r) + `<button class="btn big" id="cnext">Siguiente ➜</button>`;
-        $("#cnext").onclick = draw;
+        $("#cfb").innerHTML = (ok ? good(`¡Correcto! Era <b>${label}</b>.`) : bad(`el resultado era <b>${label}</b>.`, "seguir la flecha paso a paso (abajo): en cada compuerta se mueve.")) + traceRow(g) + coinsRow(r.counts) + bars(r.counts, 20) + badgeSrc(r) + `<button class="btn big" id="cnext">Siguiente ➜</button>`;
+        revealCoins($("#cfb")); $("#cnext").onclick = draw;
       };
     };
     draw();
@@ -573,38 +597,42 @@
   }
   function intro() {
     openModal(`<div class="intro"><h1>🐹 Quantum Files</h1><h2>El experimento fantasma</h2>
-      <p>La máquina cuántica <b>QUILLA</b> falla y falta una pieza. Eres el <b>Detective Cuy</b>: ¿quién fue?</p>
-      <div class="how"><div><span>🚶</span>Toca personajes y sigue la flecha ▼</div><div><span>🐛</span>Elimina glitches con X y H</div><div><span>🏅</span>Resuelve retos y sube de rango</div></div>
+      <p>🏔️ En <b>Qori Lab</b>, un laboratorio de animales científicos en los Andes, la máquina cuántica <b>QUILLA</b> empezó a dar resultados raros y desapareció una pieza clave.</p>
+      <div class="phi"><p>«Están mirando los resultados. Deberían mirar lo que ocurrió antes de medir.» — <b>Φ</b></p></div>
+      <p>🕵️ Eres el <b>Detective Cuy</b>. Misión: descubre <b>qué cambiaron, quién lo hizo y dónde está el módulo</b>.</p>
+      <div class="how"><div><span>🏃</span>Corre y sigue la flecha ▼</div><div><span>⚡</span>Dispara X y H a los glitches</div><div><span>🏅</span>Resuelve retos y sube de rango</div></div>
       <details><summary>📝 Mini quiz (opcional, puedes repetirlo)</summary><div id="qz0"></div></details>
       <button class="btn big" id="play">▶ Jugar</button>
       <p class="small">Piloto: la edad y frecuencia ideales se definirán con pruebas.</p></div>`);
     quizForm("pre", $("#qz0"));
     $("#play").onclick = () => { S.started = true; save(); closeModal(); cinematic(); };
   }
-  function cinematic() { // apertura inmersiva
+  function cinematic() { // apertura breve
     stage.classList.add("alarm"); sfx.alarm(); setTimeout(() => stage.classList.remove("alarm"), 3200);
-    say([["sys", "🌙 21:14 — Qori Lab, en lo alto de los Andes. Las luces parpadean y suena una alarma."], ["sys", "QUILLA, la máquina cuántica del laboratorio, empieza a entregar resultados extraños…"],
-      ["phi", "«Están mirando los resultados. Deberían mirar lo que ocurrió antes de medir.» — Φ"], ["inti", "¡Detective Cuy! Ven rápido, te necesitamos en la Sala central."],
-      ["killa", "Yo te guío, detective. Toca a Inti 🦅 y sigue la flecha amarilla ▼."]]);
+    say([["sys", "🌙 21:14 · ¡Alarma en Qori Lab!"], ["inti", "¡Detective Cuy! Ven a la Sala central."], ["killa", "Toca a Inti 🦅 y sigue la flecha amarilla ▼."]]);
   }
 
   // ------------------------------------------------------------------ bucle de movimiento
   const MAP = { w: "u", arrowup: "u", s: "d", arrowdown: "d", a: "l", arrowleft: "l", d: "r", arrowright: "r" };
   addEventListener("keydown", (e) => {
     const k = e.key.toLowerCase();
-    if (MAP[k]) { keys[MAP[k]] = true; target = null; autoId = null; e.preventDefault(); }
+    if (k === "x" && foes.length && modal.hidden && dlg.hidden) { attack("x"); e.preventDefault(); return; }
+    if (k === "h" && foes.length && modal.hidden && dlg.hidden) { attack("h"); e.preventDefault(); return; }
+    if (MAP[k]) { keys[MAP[k]] = true; target = null; autoId = null; pending = null; e.preventDefault(); }
     else if ((k === "e" || k === " " || k === "enter") && !e.repeat) {
       if (!dlg.hidden) { nextLine(); e.preventDefault(); } else if (modal.hidden && nearId) { interact(nearId); e.preventDefault(); }
     } else if (k === "escape" && !modal.hidden && S.started) closeModal();
   });
   addEventListener("keyup", (e) => { const k = MAP[e.key.toLowerCase()]; if (k) keys[k] = false; });
   dlg.addEventListener("click", nextLine);
-  stage.addEventListener("click", (e) => { if (busy) return; const r = stage.getBoundingClientRect(); target = { x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 }; autoId = null; });
+  stage.addEventListener("click", (e) => { if (busy) return; pending = null; const r = stage.getBoundingClientRect(); target = { x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 }; autoId = null; });
   document.querySelectorAll("[data-dir]").forEach((b) => {
     const d = b.dataset.dir, on = (v) => (ev) => { keys[d] = v; if (v) { target = null; autoId = null; } ev.preventDefault(); };
     b.addEventListener("pointerdown", on(true)); b.addEventListener("pointerup", on(false)); b.addEventListener("pointerleave", on(false)); b.addEventListener("pointercancel", on(false));
   });
   $("#btn-act").addEventListener("click", () => { if (!dlg.hidden) nextLine(); else if (nearId) interact(nearId); });
+  $("#btn-ax").addEventListener("click", () => attack("x")); $("#btn-ah").addEventListener("click", () => attack("h"));
+  $("#btn-ax2").addEventListener("click", () => attack("x")); $("#btn-ah2").addEventListener("click", () => attack("h"));
   $("#btn-book").addEventListener("click", () => { if (!busy || !modal.hidden) notebook(); });
   $("#btn-hint").addEventListener("click", () => { if (busy) return; S.hints++; save(); HANDLERS.killa(); });
   $("#btn-chal").addEventListener("click", () => { if (!busy || !modal.hidden) challenges(); });
@@ -626,6 +654,24 @@
       if (mv !== moving) { moving = mv; $("#pimg").src = mv ? "img/cuy_run.png" : "img/cuy_idle.png"; }
       if (dx) $("#pimg").style.transform = dx < 0 ? "scaleX(-1)" : "none";
       if (mv) { const n = Math.hypot(dx, dy); S.px = Math.max(4, Math.min(96, S.px + (dx / n) * SPEED * dt)); S.py = Math.max(16, Math.min(92, S.py + ((dy / n) * SPEED * dt) / ASP)); placePlayer(); }
+      for (const f of foes) {
+        if (f.dead) continue;
+        const dx0 = S.px - f.x, dy0 = (S.py - f.y) * ASP, d0 = Math.hypot(dx0, dy0); f.t -= dt;
+        if (f.t <= 0) { f.t = 1.5 + Math.random() * 2; f.vx = (Math.random() - 0.5) * 10; f.vy = (Math.random() - 0.5) * 10; }
+        let vx = f.vx, vy = f.vy;
+        if (d0 < 30) { vx = (dx0 / (d0 || 1)) * 8; vy = ((dy0 / (d0 || 1)) * 8) / ASP; }
+        if (d0 < 9) { vx = 0; vy = 0; }
+        f.x = clamp(f.x + vx * dt, 6, 94); f.y = clamp(f.y + vy * dt, 22, 90);
+        if (f.x <= 6 || f.x >= 94) f.vx *= -1; if (f.y <= 22 || f.y >= 90) f.vy *= -1;
+        if (f.el) { f.el.style.left = f.x + "%"; f.el.style.top = f.y + "%"; }
+      }
+      if (pending) {
+        if (pending.f.dead) pending = null;
+        else if (dist(S.px, S.py, pending.f.x, pending.f.y) <= 30) { const pp = pending; pending = null; target = null; fire(pp.g, pp.f); }
+        else target = { x: pending.f.x, y: Math.min(pending.f.y + 5, 92) };
+      }
+      const nf = nearestFoe(26);
+      if (nf !== curTgt) { const prev = curTgt; curTgt = nf; if (prev) paintFoe(prev); if (nf) { paintFoe(nf); panel("Ese glitch está en rango. ¡Dispara ⚡X o 🌀H!", nf); } else if (foes.length) panel("Corre hacia un glitch 🐛 y dispárale con ⚡X o 🌀H."); }
       let best = null, bd = 13;
       for (const o of ROOMS[S.room].objs) { const d = dist(S.px, S.py, o.x, o.y); if (d < bd) { bd = d; best = o; } }
       const id = best ? best.id : null;
@@ -644,5 +690,5 @@
   fetch("api/run", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ gates: [], shots: 1, seed: 0 }) }).then((r) => r.text()).catch(() => {}); // precalienta Qiskit
   if (!S.started) intro(); else if (S.stage >= 7) ending();
   if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
-  window.QF = { S: () => S, interact, runCircuit, render, closeModal, setStage, say, challenges, glitchWave, get busy() { return busy; } };
+  window.QF = { foes: () => foes, attack, focusFoe: (i) => { focus = foes[i]; foes.forEach(paintFoe); }, S: () => S, interact, runCircuit, render, closeModal, setStage, say, challenges, glitchWave, get busy() { return busy; } };
 })();
