@@ -81,6 +81,8 @@ La aplicación usa HTML, CSS y JavaScript del navegador, Python, Qiskit y Vercel
 - [Estado de integración y fuentes de verdad](docs/ESTADO-INTEGRACION.md)
 - [Migración narrativa y referencia JSON v2](docs/MIGRACION-NARRATIVA.md)
 
-## Límites que deben exponerse
+## Pruebas internas y alcance del proyecto
 
-La simulación Qiskit ocurre en CPU y no demuestra ventaja cuántica; el respaldo JavaScript es otro simulador. El episodio no entrena un modelo QML. La evaluación con jugadores no tiene resultados documentados, las preguntas previas y posteriores no son formas equivalentes y la duración no se registra automáticamente. El guardado ocurre en el dispositivo; no hay cuentas ni analítica centralizada. El despliegue público respondió a comprobaciones puntuales, pero no se vinculó al commit que se entregará. La compatibilidad y accesibilidad tampoco cuentan con una auditoría formal. El detalle está en [Limitaciones](docs/LIMITACIONES.md).
+Los cuatro integrantes probaron manualmente el videojuego. Estas pruebas internas confirman que el equipo interactuó con el prototipo, pero no contamos con métricas registradas de duración, puntuaciones pretest/postest ni resultados cuantitativos. No equivalen a una evaluación externa ni demuestran eficacia pedagógica. La validación con participantes externos sigue pendiente; las preguntas iniciales y finales tampoco son formas equivalentes y la duración no se registra automáticamente.
+
+La simulación Qiskit ocurre en CPU y no demuestra ventaja cuántica; el respaldo JavaScript es otro simulador. El episodio no entrena un modelo QML. El progreso se guarda localmente, sin cuentas ni analítica centralizada. La compatibilidad y accesibilidad aún no cuentan con auditoría formal. El detalle está en [Limitaciones](docs/LIMITACIONES.md) y [Validación](docs/VALIDACION.md).

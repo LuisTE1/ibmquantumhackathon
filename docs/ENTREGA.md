@@ -1,27 +1,27 @@
 # Lista de entrega del hackathon
 
-Esta lista organiza los elementos que las bases del evento solicitan para la entrega. No afirma que el portal ya haya recibido archivos ni que exista un video o presentación terminados.
+Esta lista registra los datos de entrega confirmados por el equipo. El formulario de la hackathon ya fue enviado con GitHub, Canva y la demo de Vercel. El video era opcional y no se presentó.
 
 ## Equipo
 
 - **Equipo:** Qubit a la Brasa.
-- **Integrantes:** cuatro personas. Completar con los nombres oficiales antes del envío.
-  1. ____________________
-  2. ____________________
-  3. ____________________
-  4. ____________________
-- **Responsable del envío y comunicaciones:** ____________________.
+- **Integrantes:**
+  1. Maricielo Rubi Antúnez de Mayolo Seminario — líder.
+  2. Luis Giovani de la Cruz Hoyos.
+  3. Leonardo Sait Yactayo Tolentino.
+  4. Luis Hernando Tataje Espinoza.
 
 ## Elementos para el portal
 
-- [ ] **Repositorio GitHub:** [LuisTE1/ibmquantumhackathon](https://github.com/LuisTE1/ibmquantumhackathon). Verificar acceso del jurado, rama que se presentará y README visible.
-- [ ] **Demo o video:** [https://quantum-files.vercel.app/](https://quantum-files.vercel.app/). El 24 de octubre de 2026 la página y API respondieron; los assets principales comparados coinciden con `origin/main` actual y el POST H–H devolvió el resultado ideal esperado. Falta una prueba E2E en navegador y confirmar con quien administra Vercel que este es el build de entrega.
+- [x] **Repositorio GitHub:** [LuisTE1/ibmquantumhackathon](https://github.com/LuisTE1/ibmquantumhackathon). Incluido en el formulario enviado.
+- [x] **Demo:** [https://quantum-files.vercel.app/](https://quantum-files.vercel.app/). Incluida en el formulario; el 24 de octubre de 2026 la página y API respondieron y el POST H–H devolvió el resultado ideal esperado. La prueba E2E completa en navegador sigue pendiente.
 - [ ] **Descripción para el portal (100–150 palabras):**
-  > *Quantum Files — Caso 01: El experimento fantasma es una aventura educativa en formato PWA para navegador y móvil, con público propuesto de 14 años en adelante. En Qori Lab, Detective Cuy investiga por qué QUILLA cambió sus resultados: compara probabilidad teórica y conteos observados, prueba puertas H y X, reconstruye la secuencia H–H y contrasta la explicación del circuito con la memoria de auditoría. La historia distingue la edición de Sami, registrada a las 21:14, de la retirada posterior del módulo por Rumi, a las 21:19. El backend usa Qiskit Statevector y StatevectorSampler en simulación CPU; si la API falla, el navegador usa un simulador JavaScript local. No se usa QPU ni se entrena QML. La propuesta educativa aún requiere evaluación con participantes.*
-- [ ] **Tecnologías:** HTML, CSS y JavaScript; Python; Qiskit Statevector y StatevectorSampler; Vercel.
+- [x] **Presentación:** [Canva](https://www.canva.com/design/DAHY9C-6uTY/U-A7j4CnlHb4YUFBDyBA4g/edit), incluida en el formulario.
+- **Video:** opcional; no presentado.
+- **Descripción para el portal (100–150 palabras):** la descripción del proyecto fue enviada en el formulario; este repositorio no conserva una copia verificada del texto exacto.
+- [x] **Tecnologías:** HTML, CSS y JavaScript; Python; Qiskit Statevector y StatevectorSampler; Vercel.
 - [ ] **Diferencial educativo:** el jugador predice y experimenta antes de reunir evidencias; la frecuencia observada no decide la culpabilidad. La audiencia 14+ es propuesta y el impacto educativo todavía no está validado.
-- [ ] **Presentación (PPT):** preparar y comprobar que incluya problema, solución, público propuesto, metodología, demostración, uso real de Qiskit, limitaciones, fuentes y estrategia de validación. No incluir puntuaciones de rúbrica inventadas.
-- [ ] **Envío:** abrir el portal designado por la organización, cargar todos los elementos, verificar permisos y enlaces, y guardar confirmación de envío.
+- [x] **Envío:** el equipo confirma que el formulario de la hackathon fue enviado con GitHub, Canva y la demo. La confirmación/recibo no está archivada en el repositorio.
 
 ## Preparación para la presentación
 
@@ -37,8 +37,8 @@ Esta lista organiza los elementos que las bases del evento solicitan para la ent
 - Suite Python local más reciente: 17 aprobadas, 2 fallidas y 1 error de colección. Los dos fallos pertenecen a pruebas legacy de Streamlit; `tests/test_web.py` no pudo recolectarse porque falta Qiskit.
 - Scripts `tests/e2e/verify.js`, `play6.js` y `play7.js`: sintaxis JavaScript válida, pero ejecución de navegador omitida por falta de Playwright y Chrome.
 - Demo pública: recursos principales y API responden; POST H–H devuelve la probabilidad ideal. El recorrido E2E aún no está certificado.
-- No se encontraron en este repositorio el PPT ni el video. No se encontraron nombres confirmados de los cuatro integrantes. Enlaces y confirmación del portal no disponibles en el repositorio.
+- La presentación Canva y los nombres de los cuatro integrantes fueron confirmados por el equipo. El video era opcional y no se presentó.
 
 ## Información pendiente
 
-Los nombres de cuatro integrantes, el archivo PPT, el video de respaldo, el enlace activo del portal y la confirmación del envío deben completarse por el equipo. No se han inventado en este documento.
+El recibo del formulario no está archivado en el repositorio. El texto exacto de la descripción enviada tampoco se conserva aquí. El video no se presentó porque era opcional.

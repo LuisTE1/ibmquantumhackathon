@@ -18,9 +18,9 @@ El jugador es Detective Cuy. Recorre el laboratorio, conversa con Killa, Inti, R
 
 **[Mostrar la PWA, mover al Detective Cuy e iniciar una actividad.]** Antes de medir, el jugador predice qué saldrá. Aplicamos H al estado 0 y observamos una distribución 50/50. Luego comparamos H–H, sin medición entre las puertas: en el circuito ideal las amplitudes interfieren y el resultado final vuelve a 0. La pantalla muestra los conteos de los shots y si llegaron desde Qiskit en el servidor o desde el simulador JavaScript local. La memoria de auditoría aporta quién hizo la edición; el circuito explica qué efecto produjo. La frecuencia, por sí sola, no identifica a una persona.
 
-**[1:45–2:20 | Metodología]**
+**[1:45–2:20 | Metodología y pruebas internas]**
 
-Ese es el ciclo de aprendizaje: predecir, experimentar, observar, comprender y desbloquear evidencia. Las preguntas del juego y la retroalimentación dan otra oportunidad para explicar el resultado; los desafíos repetibles, rachas e insignias invitan a practicar. Son decisiones de diseño que todavía debemos evaluar, no resultados de aprendizaje ya demostrados.
+Ese es el ciclo de aprendizaje: predecir, experimentar, observar, comprender y desbloquear evidencia. Las preguntas del juego y la retroalimentación dan otra oportunidad para explicar el resultado; los desafíos repetibles, rachas e insignias invitan a practicar. Los cuatro integrantes probamos manualmente el videojuego, pero no registramos métricas ni resultados pretest/postest. Esa revisión interna nos permitió recorrer el prototipo; no demuestra eficacia pedagógica. La evaluación externa sigue pendiente.
 
 **[2:20–2:50 | Tecnología y límites]**
 

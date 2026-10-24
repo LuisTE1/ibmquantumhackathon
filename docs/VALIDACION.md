@@ -2,7 +2,15 @@
 
 ## Estado de evidencia
 
-No hay resultados de sesiones con participantes registrados. Las tablas de este documento están vacías y deben completarse con observaciones reales. El 24 de octubre de 2026 se verificaron por HTTP la página, assets principales y API pública; no se ejecutó el recorrido completo en navegador. Ver `ESTADO-INTEGRACION.md`.
+Los cuatro integrantes realizaron pruebas manuales internas del videojuego. No se registraron métricas individuales, tiempos, puntuaciones pretest/postest ni resultados cuantitativos; por tanto, estas pruebas no permiten estimar aprendizaje ni eficacia. No son un estudio con usuarios externos. La evaluación educativa externa sigue pendiente y la plantilla de resultados de este documento continúa vacía.
+
+Por separado, el 24 de octubre de 2026 se verificaron por HTTP la página, assets principales y API pública; no se ejecutó el recorrido completo en navegador. Ver `ESTADO-INTEGRACION.md`. Las pruebas automatizadas se resumen más abajo y tampoco sustituyen una evaluación educativa.
+
+## Pruebas manuales internas del equipo
+
+| Grupo | Actividad | Métricas registradas | Interpretación permitida |
+|---|---|---|---|
+| Cuatro integrantes del equipo | Prueba manual del videojuego | No hay tiempos, resultados cuantitativos ni puntuaciones individuales documentadas | Prueba interna de uso del prototipo; no demuestra eficacia pedagógica ni representa evaluación externa |
 
 ## Pruebas técnicas reproducibles
 

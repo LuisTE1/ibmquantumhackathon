@@ -16,7 +16,7 @@ Una muestra que contiene siete unos no demuestra que el dispositivo esté altera
 
 ## Evaluación educativa
 
-No hay datos reales documentados de pruebas con participantes, comprensión, facilidad, tiempo o retorno. La audiencia 14+ es propuesta y falta validarla. El cuestionario opcional de la PWA tiene tres preguntas antes y tres después, pero no son formas equivalentes y sus contenidos no miden todos los mismos objetivos en ambas fases. El exportador conserva puntuaciones, no respuestas individuales ni duración. Un resultado pequeño de 2–5 personas sería exploratorio, no una demostración causal.
+Los cuatro integrantes realizaron pruebas manuales internas, pero no se conservaron métricas, tiempos individuales ni resultados cuantitativos pretest/postest. Estas pruebas no son un estudio externo ni demuestran eficacia pedagógica. Aún faltan datos documentados de comprensión, facilidad, tiempo o intención de volver a jugar con participantes externos. La audiencia 14+ es propuesta y falta validarla. El cuestionario opcional de la PWA tiene tres preguntas antes y tres después, pero no son formas equivalentes y sus contenidos no miden todos los mismos objetivos en ambas fases. El exportador conserva puntuaciones, no respuestas individuales ni duración. Un piloto externo de 2–5 personas sería exploratorio, no una demostración causal.
 
 ## Persistencia y datos
 
