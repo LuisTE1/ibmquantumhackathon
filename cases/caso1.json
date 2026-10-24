@@ -1,0 +1,14 @@
+{
+  "title": "El experimento alterado",
+  "incident": {"config_changed_at": "14:05", "original_p": 0.5, "altered_p": 0.75, "altered_theta_deg": 120},
+  "suspects": [
+    {"id": "lola", "name": "Lola Llama", "role": "Investigadora", "access": "14:05",
+     "statement": "Con una moneda 50/50, en 10 mediciones siempre salen 5 y 5.", "statement_true": false},
+    {"id": "tito", "name": "Tito Vicuña", "role": "Técnico", "access": "13:30",
+     "statement": "Con 7 unos en 10 no puedo concluir que haya alteración.", "statement_true": true},
+    {"id": "cora", "name": "Cora Cóndor", "role": "Analista", "access": "15:10",
+     "statement": "Con p = 0.75, en 100 mediciones espero cerca de 75 unos, aunque no exactamente 75.", "statement_true": true}
+  ],
+  "solution": {"culprit": "lola", "needs": ["false_statement", "present_at_change_time"]},
+  "hook": "Una firma con la letra Ψ aparece en la pantalla... el siguiente incidente ya empezó."
+}
