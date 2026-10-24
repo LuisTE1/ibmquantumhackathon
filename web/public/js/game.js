@@ -509,7 +509,7 @@
 
   // ------------------------------------------------------------------ inicio
   render(); requestAnimationFrame(loop);
-  fetch("api/run").catch(() => {}); // precalienta la función de Qiskit para que la primera medición sea rápida
+  fetch("api/run", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ gates: [], shots: 1, seed: 0 }) }).then((r) => r.text()).catch(() => {}); // precalienta la función de Qiskit
   if (!S.started) intro(); else if (S.stage >= 7) ending();
   if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
   window.QF = { S: () => S, interact, runCircuit, render, closeModal, setStage, say, challenges, glitchWave, get busy() { return busy; } };
