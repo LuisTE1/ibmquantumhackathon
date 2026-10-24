@@ -181,3 +181,45 @@ img{max-width:100%}
 
 .side{padding:6px}.sidea svg{max-width:100px;height:auto}.sideb .circ{max-width:300px}
 .bugs{margin-bottom:64px}
+
+/* ---- v6: panel del Profe Cuy aparte, enemigos en la sala ---- */
+.wrap{display:grid;grid-template-columns:1fr;gap:10px;justify-items:center;align-items:start;max-width:1380px;margin:0 auto;width:100%}
+.stage{width:100%!important;max-width:1000px}
+.sidepanel{width:100%;max-width:1000px;background:var(--bg2);border:3px solid var(--cu);border-radius:14px;padding:8px 10px;min-height:96px}
+.sidepanel .coach{margin:0}
+.sidepanel .side{margin:6px 0 0}
+@media(min-width:980px) and (orientation:landscape){
+  .wrap{grid-template-columns:minmax(0,1fr) 340px;align-items:stretch}
+  .stage{max-width:none}
+  .sidepanel{max-width:none;min-height:0}
+  .help{grid-column:1 / -1}
+}
+@media(orientation:portrait){
+  .stage{aspect-ratio:1/1;width:100%!important}
+  .wrap{padding-bottom:158px;justify-content:flex-start}
+  .sidepanel{min-height:110px}
+}
+.rightc{display:flex;flex-direction:column;gap:8px;align-items:flex-end;pointer-events:none}
+.atkrow{display:none;gap:8px;pointer-events:auto}
+body.fight .atkrow{display:flex}
+.atk{background:var(--cu);color:#1b1208;border:3px solid var(--cu2);border-radius:16px;padding:14px 16px;font-size:19px;font-weight:900;touch-action:manipulation}
+.atk:active{transform:scale(.94)}
+.act{pointer-events:auto}
+.foe{position:absolute;transform:translate(-50%,-60%);z-index:3;pointer-events:none;text-align:center;transition:filter .2s}
+.foe>img{height:calc(var(--u)*6.5);width:auto;display:block;margin:0 auto;filter:drop-shadow(0 0 6px #b04dff)}
+.foe.boss>img{height:calc(var(--u)*11)}
+.foe .fst{display:flex;flex-direction:column;align-items:center;background:#0009;border-radius:10px;padding:1px 6px;font-size:max(9px,calc(var(--u)*1.2));margin-top:-4px}
+.foe .fst svg{width:max(32px,calc(var(--u)*4.4));height:auto}
+.foe.tgt>img{filter:drop-shadow(0 0 10px #ffd24a) drop-shadow(0 0 22px #ffd24a)}
+.foe.tgt .fst{background:#ffd24a;color:#1b1208}
+.foe.dying{animation:boom .45s forwards}@keyframes boom{50%{transform:translate(-50%,-60%) scale(1.5);filter:brightness(3)}100%{transform:translate(-50%,-60%) scale(0);opacity:0}}
+.pop{position:absolute;transform:translate(-50%,-110%);z-index:6;font-size:max(20px,calc(var(--u)*3.4));font-weight:900;color:#ffd24a;text-shadow:0 2px 6px #000;pointer-events:none;animation:popup .7s forwards}
+@keyframes popup{to{transform:translate(-50%,-200%);opacity:0}}
+@media(prefers-reduced-motion:reduce){.foe.dying,.pop{animation:none}}
+
+/* ---- v6b: controles en el flujo (justo bajo el escenario), sin solaparse con el panel ---- */
+.controls{position:static!important;display:none;width:100%;max-width:1000px;padding:2px 4px!important;justify-content:space-between;align-items:flex-end;pointer-events:auto}
+@media(pointer:coarse),(max-width:760px){.controls{display:flex!important}}
+.wrap{padding-bottom:8px!important}
+@media(orientation:portrait){.stage{aspect-ratio:4/3!important}}
+.dpad{grid-template-columns:repeat(3,50px);grid-template-rows:repeat(2,50px)}
