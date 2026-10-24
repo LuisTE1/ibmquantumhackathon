@@ -1,7 +1,7 @@
 /* Service worker: red primero (siempre la versión nueva) y copia local si no hay conexión. */
-const CACHE = "qf-v3";
+const CACHE = "qf-v5";
 const SHELL = ["./", "index.html", "styles.css", "js/sim.js", "js/game.js", "manifest.webmanifest",
-  "img/cuy_idle.png", "img/cuy_run.png", "img/llama.png", "img/andes.jpg", "icons/icon-192.png", "icons/icon-512.png"];
+  "img/cuy_idle.png", "img/bug0.png", "img/bug1.png", "img/boss.png", "img/cuy_run.png", "img/llama.png", "img/andes.jpg", "icons/icon-192.png", "icons/icon-512.png"];
 self.addEventListener("install", (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener("fetch", (e) => {
