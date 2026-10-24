@@ -109,7 +109,7 @@ with st.sidebar:
     for i, name in enumerate(STEPS):
         st.write(("✅ " if i < S.step else "▶️ " if i == S.step else "⬜ ") + name)
     st.divider()
-    st.caption("👤 Edad recomendada: **14+** (sin saber cuántica)  \n⏱️ Una partida: ~5–8 min · ideal **una vez al día**")
+    st.caption("👤 Pensado para estudiantes (edad y frecuencia ideales: por validar en la prueba piloto)  \n⏱️ Una partida: ~5–8 min")
     if not circuits.USE_QISKIT:
         st.warning("Modo respaldo: Qiskit no disponible (se usan números aleatorios).")
     with st.expander("📖 Glosario"):
