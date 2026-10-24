@@ -318,9 +318,11 @@
   const kindOf = (v) => (Math.abs(v[1]) > 0.999 ? "1" : Math.abs(v[0]) > 0.999 ? "0" : v[0] * v[1] > 0 ? "+" : "-");
   function attachFoe(f) {
     const n = el("div", "foe" + (f.boss ? " boss" : ""), `<img src="img/${f.boss ? "boss" : "bug" + (f.id % 2)}.png" alt="glitch" draggable="false"><div class="fst"></div>`);
-    n.style.left = f.x + "%"; n.style.top = f.y + "%"; f.el = n; stage.appendChild(n); paintFoe(f);
+    n.style.left = f.x + "%"; n.style.top = f.y + "%"; f.el = n; stage.appendChild(n);
+    n.addEventListener("click", (ev) => { ev.stopPropagation(); if (busy) return; focus = f; sfx.hit(); foes.forEach(paintFoe); panel("Glitch elegido ✔. Pulsa <b>X</b> o <b>H</b> para dispararle (tu cuy irá hasta él).", f); });
+    paintFoe(f);
   }
-  function paintFoe(f) { if (!f.el) return; f.el.querySelector(".fst").innerHTML = bloch(f.v, 40, { labels: false }) + `<b>${stateText(f.v)}</b>`; f.el.classList.toggle("tgt", curTgt === f); }
+  function paintFoe(f) { if (!f.el) return; f.el.querySelector(".fst").innerHTML = bloch(f.v, 40, { labels: false }) + `<b>${stateText(f.v)}</b>`; f.el.classList.toggle("tgt", curTgt === f || focus === f); }
   function ensureWave() {
     const w = WAVE_AT[S.stage];
     if (!w || S.waves[w] || S.room !== WAVE_ROOM[w] || foes.length || lessonOn || busy) return;
@@ -335,15 +337,21 @@
     panel(`¡Glitches! 🐛 Corre hacia uno y pulsa <b>⚡X</b> o <b>🌀H</b> (teclas <b>J</b> / <b>K</b>). Déjalo en <b>0</b> (flecha arriba).`);
   }
   function nearestFoe(max = 26) { let best = null, bd = max; foes.forEach((f) => { if (f.dead) return; const d = dist(S.px, S.py, f.x, f.y); if (d < bd) { bd = d; best = f; } }); return best; }
+  let focus = null, pending = null;
+  function anyFoe() { let best = null, bd = 1e9; foes.forEach((f) => { if (f.dead) return; const d = dist(S.px, S.py, f.x, f.y); if (d < bd) { bd = d; best = f; } }); return best; }
   function attack(g) {
     if (!foes.length || !modal.hidden) return;
-    const f = nearestFoe(30);
-    if (!f) { toast("Acércate a un glitch 🐛"); return panel("Aún estás lejos. <b>Corre hacia un glitch</b> hasta que se ilumine y vuelve a disparar."); }
+    const f = focus && !focus.dead ? focus : nearestFoe(34) || anyFoe();
+    if (!f) return;
+    if (dist(S.px, S.py, f.x, f.y) > 34) { pending = { g, f }; target = { x: f.x, y: Math.min(f.y + 5, 92) }; autoId = null; toast("🏃 Voy hacia el glitch…"); return; }
+    pending = null; fire(g, f);
+  }
+  function fire(g, f) {
     const prev = kindOf(f.v), before = stateText(f.v);
     f.v = applyG(g, f.v); f.hist.push(g); fightMoves++;
     const tag = el("div", "pop", g.toUpperCase()); tag.style.left = f.x + "%"; tag.style.top = f.y + "%"; stage.appendChild(tag); setTimeout(() => tag.remove(), 700);
     if (Math.abs(f.v[0]) > 0.999) {
-      f.dead = true; S.kills++; sfx.kill(); award(3); if (f.el) { f.el.classList.add("dying"); const e0 = f.el; setTimeout(() => e0.remove(), 450); }
+      f.dead = true; if (focus === f) focus = null; S.kills++; sfx.kill(); award(3); if (f.el) { f.el.classList.add("dying"); const e0 = f.el; setTimeout(() => e0.remove(), 450); }
       if (foes.every((x) => x.dead)) return waveWon(foes.wave);
       curTgt = null; return panel(g === "x" ? "¡Eliminado! ⚡X le dio la vuelta: de <b>1</b> pasó a <b>0</b>." : "¡Eliminado! 🌀H lo mezcló de nuevo y lo dejó en <b>0</b>.", null);
     }
@@ -356,7 +364,7 @@
     panel(m, f);
   }
   function waveWon(w) {
-    S.waves[w] = true; save(); foes = []; curTgt = null; document.body.classList.remove("fight"); burst(); sfx.ok();
+    S.waves[w] = true; save(); foes = []; curTgt = null; focus = null; pending = null; document.body.classList.remove("fight"); burst(); sfx.ok();
     const perfect = fightMoves <= fightMin; if (perfect) { award(5); badge("cazador"); }
     toast("🎉 ¡Glitches eliminados!");
     panel((perfect ? "⭐ ¡Perfecto, mínimo de movimientos! " : `Lo lograste en ${fightMoves} movimientos (mínimo ${fightMin}). `) + `Ahora ve a <b>${DEVICE[w]}</b>.`);
@@ -601,22 +609,23 @@
   const MAP = { w: "u", arrowup: "u", s: "d", arrowdown: "d", a: "l", arrowleft: "l", d: "r", arrowright: "r" };
   addEventListener("keydown", (e) => {
     const k = e.key.toLowerCase();
-    if ((k === "j" || k === "1") && foes.length && modal.hidden && dlg.hidden) { attack("x"); e.preventDefault(); return; }
-    if ((k === "k" || k === "2") && foes.length && modal.hidden && dlg.hidden) { attack("h"); e.preventDefault(); return; }
-    if (MAP[k]) { keys[MAP[k]] = true; target = null; autoId = null; e.preventDefault(); }
+    if ((k === "j" || k === "1" || k === "x") && foes.length && modal.hidden && dlg.hidden) { attack("x"); e.preventDefault(); return; }
+    if ((k === "k" || k === "2" || k === "h") && foes.length && modal.hidden && dlg.hidden) { attack("h"); e.preventDefault(); return; }
+    if (MAP[k]) { keys[MAP[k]] = true; target = null; autoId = null; pending = null; e.preventDefault(); }
     else if ((k === "e" || k === " " || k === "enter") && !e.repeat) {
       if (!dlg.hidden) { nextLine(); e.preventDefault(); } else if (modal.hidden && nearId) { interact(nearId); e.preventDefault(); }
     } else if (k === "escape" && !modal.hidden && S.started) closeModal();
   });
   addEventListener("keyup", (e) => { const k = MAP[e.key.toLowerCase()]; if (k) keys[k] = false; });
   dlg.addEventListener("click", nextLine);
-  stage.addEventListener("click", (e) => { if (busy) return; const r = stage.getBoundingClientRect(); target = { x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 }; autoId = null; });
+  stage.addEventListener("click", (e) => { if (busy) return; pending = null; const r = stage.getBoundingClientRect(); target = { x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 }; autoId = null; });
   document.querySelectorAll("[data-dir]").forEach((b) => {
     const d = b.dataset.dir, on = (v) => (ev) => { keys[d] = v; if (v) { target = null; autoId = null; } ev.preventDefault(); };
     b.addEventListener("pointerdown", on(true)); b.addEventListener("pointerup", on(false)); b.addEventListener("pointerleave", on(false)); b.addEventListener("pointercancel", on(false));
   });
   $("#btn-act").addEventListener("click", () => { if (!dlg.hidden) nextLine(); else if (nearId) interact(nearId); });
   $("#btn-ax").addEventListener("click", () => attack("x")); $("#btn-ah").addEventListener("click", () => attack("h"));
+  $("#btn-ax2").addEventListener("click", () => attack("x")); $("#btn-ah2").addEventListener("click", () => attack("h"));
   $("#btn-book").addEventListener("click", () => { if (!busy || !modal.hidden) notebook(); });
   $("#btn-hint").addEventListener("click", () => { if (busy) return; S.hints++; save(); HANDLERS.killa(); });
   $("#btn-chal").addEventListener("click", () => { if (!busy || !modal.hidden) challenges(); });
@@ -649,6 +658,11 @@
         if (f.x <= 6 || f.x >= 94) f.vx *= -1; if (f.y <= 22 || f.y >= 90) f.vy *= -1;
         if (f.el) { f.el.style.left = f.x + "%"; f.el.style.top = f.y + "%"; }
       }
+      if (pending) {
+        if (pending.f.dead) pending = null;
+        else if (dist(S.px, S.py, pending.f.x, pending.f.y) <= 30) { const pp = pending; pending = null; target = null; fire(pp.g, pp.f); }
+        else target = { x: pending.f.x, y: Math.min(pending.f.y + 5, 92) };
+      }
       const nf = nearestFoe(26);
       if (nf !== curTgt) { const prev = curTgt; curTgt = nf; if (prev) paintFoe(prev); if (nf) { paintFoe(nf); panel("Ese glitch está en rango. ¡Dispara ⚡X o 🌀H!", nf); } else if (foes.length) panel("Corre hacia un glitch 🐛 y dispárale con ⚡X o 🌀H."); }
       let best = null, bd = 13;
@@ -669,5 +683,5 @@
   fetch("api/run", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ gates: [], shots: 1, seed: 0 }) }).then((r) => r.text()).catch(() => {}); // precalienta Qiskit
   if (!S.started) intro(); else if (S.stage >= 7) ending();
   if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
-  window.QF = { foes: () => foes, attack, S: () => S, interact, runCircuit, render, closeModal, setStage, say, challenges, glitchWave, get busy() { return busy; } };
+  window.QF = { foes: () => foes, attack, focusFoe: (i) => { focus = foes[i]; foes.forEach(paintFoe); }, S: () => S, interact, runCircuit, render, closeModal, setStage, say, challenges, glitchWave, get busy() { return busy; } };
 })();

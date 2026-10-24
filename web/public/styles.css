@@ -223,3 +223,11 @@ body.fight .atkrow{display:flex}
 .wrap{padding-bottom:8px!important}
 @media(orientation:portrait){.stage{aspect-ratio:4/3!important}}
 .dpad{grid-template-columns:repeat(3,50px);grid-template-rows:repeat(2,50px)}
+
+/* ---- v7: disparo fiable ---- */
+.foe{pointer-events:auto!important;cursor:crosshair}
+.foe>img,.foe .fst{pointer-events:none}
+.atkrow2{display:none;gap:10px;margin-top:8px}
+body.fight .atkrow2{display:flex}
+.atkrow2 .atk{flex:1;font-size:20px;padding:14px 8px}
+@media(pointer:coarse),(max-width:760px){.atkrow2{display:none!important}}
