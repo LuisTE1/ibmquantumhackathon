@@ -1,1 +1,13 @@
-{"probabilidad": "Número entre 0 y 1 que dice qué tan posible es un resultado.", "qubit": "Unidad básica de información cuántica; al medirlo da 0 o 1.", "shots": "Cantidad de veces que repites una medición."}
+{
+  "probabilidad": "Número entre 0 y 1 (o 0 % y 100 %) que dice qué tan posible es un resultado.",
+  "frecuencia": "Lo que realmente observas al repetir un experimento: cuántas veces salió cada resultado. Fluctúa alrededor de la probabilidad.",
+  "p-valor": "Qué tan frecuente sería un resultado así de raro si todo fuera normal. Si es alto (como 17 %), el azar lo explica fácilmente.",
+  "qubit": "Unidad básica de información cuántica. Al medirlo siempre obtienes 0 o 1.",
+  "superposición": "Estado de un qubit que no es 0 ni 1 todavía: tiene una probabilidad de dar cada uno al medirlo.",
+  "medición": "Mirar el qubit. El resultado es 0 o 1 y la superposición se pierde.",
+  "shots": "Cantidad de veces que repites el circuito y la medición para ver frecuencias.",
+  "compuerta h (Hadamard)": "Operación que lleva un qubit de 0 a una superposición 50/50.",
+  "compuerta rx": "Giro del qubit con un ángulo θ. Define la probabilidad de obtener 1: sin²(θ/2).",
+  "descenso de gradiente": "Forma de ajustar una perilla (parámetro) dando pasos que reducen el error. Así se entrenan los circuitos cuánticos variacionales.",
+  "circuito variacional": "Circuito cuántico con perillas (ángulos) que se ajustan para acercarse a un resultado deseado: base del aprendizaje automático cuántico (QML)."
+}

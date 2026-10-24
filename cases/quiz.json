@@ -1,1 +1,18 @@
-{"pre": [], "post": []}
+{
+  "pre": [
+    {"q": "Lanzas 10 veces una moneda justa. ¿Siempre salen exactamente 5 caras y 5 sellos?",
+     "options": ["Sí, siempre", "No: el número varía alrededor de 5", "Solo si lanzas muy rápido"], "answer": 1},
+    {"q": "Mides un qubit que está en superposición 50/50. ¿Qué obtienes?",
+     "options": ["Siempre 0", "Siempre 1", "0 o 1 al azar, cada uno con cierta probabilidad"], "answer": 2},
+    {"q": "En un experimento 50/50 salieron 7 unos en 10 mediciones. ¿Prueba eso que fue alterado?",
+     "options": ["Sí, seguro", "No: puede pasar por puro azar", "Solo si fueron más de 10 mediciones"], "answer": 1}
+  ],
+  "post": [
+    {"q": "Un experimento da 1 con probabilidad 0.75. Haces 100 mediciones. ¿Qué esperas?",
+     "options": ["Exactamente 75 unos", "Cerca de 75 unos, pero puede variar", "Siempre más de 75 unos"], "answer": 1},
+    {"q": "¿Qué hace la compuerta Hadamard (h) sobre un qubit en 0?",
+     "options": ["Lo deja en 0", "Lo pone en superposición 50/50", "Lo mide"], "answer": 1},
+    {"q": "En un caso, un sospechoso hizo una declaración falsa. ¿Basta eso para acusarlo?",
+     "options": ["Sí, siempre", "No: hace falta otra evidencia que lo respalde", "Solo si es el más sospechoso"], "answer": 1}
+  ]
+}
