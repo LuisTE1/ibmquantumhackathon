@@ -1,5 +1,5 @@
-"""Servidor local del juego (para probar con amigos en la misma red Wi-Fi).
-Sirve web/ y responde POST /api/run con Qiskit real (igual que en Vercel).
+﻿"""Servidor local del juego (para probar con amigos en la misma red Wi-Fi).
+Sirve web/public/ y responde POST /api/run con Qiskit real (igual que en Vercel).
 Uso:  python web/serve_local.py [puerto]      -> http://<tu-IP>:8765
 """
 import json
@@ -19,7 +19,7 @@ mimetypes.add_type("text/javascript", ".js")
 
 class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *a, **k):
-        super().__init__(*a, directory=HERE, **k)
+        super().__init__(*a, directory=os.path.join(HERE, "public"), **k)
 
     def end_headers(self):
         self.send_header("Cache-Control", "no-cache")
@@ -62,3 +62,4 @@ if __name__ == "__main__":
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8765
     print(f"Local:  http://localhost:{port}\nRed:    http://{lan_ip()}:{port}   (mismo Wi-Fi)\nCtrl+C para detener", flush=True)
     ThreadingHTTPServer(("0.0.0.0", port), Handler).serve_forever()
+

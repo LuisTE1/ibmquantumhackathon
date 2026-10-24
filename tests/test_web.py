@@ -1,4 +1,4 @@
-"""Verifica el núcleo cuántico del juego web: Qiskit real (api/_qrun.py), el simulador local (js/sim.js) y el handler."""
+﻿"""Verifica el núcleo cuántico del juego web: Qiskit real (api/_qrun.py), el simulador local (js/sim.js) y el handler."""
 import itertools
 import json
 import shutil
@@ -42,7 +42,7 @@ def test_simulador_js_coincide_con_qiskit():
         "const s=require(process.argv[1]);const seqs=JSON.parse(process.argv[2]);"
         "console.log(JSON.stringify(seqs.map(g=>s.probs(g))));"
     )
-    out = subprocess.run(["node", "-e", js, str(WEB / "js" / "sim.js"), json.dumps(SECUENCIAS)],
+    out = subprocess.run(["node", "-e", js, str(WEB / "public" / "js" / "sim.js"), json.dumps(SECUENCIAS)],
                          capture_output=True, text=True, check=True).stdout
     js_probs = json.loads(out)
     for gates, pj in zip(SECUENCIAS, js_probs):
@@ -70,3 +70,4 @@ def test_handler_http_contrato():
         assert e.value.code == 400
     finally:
         srv.shutdown()
+
